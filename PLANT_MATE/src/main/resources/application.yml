@@ -1,0 +1,30 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+
+spring:
+  devtools:
+    livereload:
+      enabled: true
+    remote:
+      restart:
+        enabled: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/plant_mate?serverTimezone=Asia/Seoul
+    username: root
+    password: kwon7788966
+  web:
+    resources:
+      static-locations: file:src/main/resources/static/
+
+mybatis:
+  type-aliases-package: com.sqisoft.plant_mate
+  mapper-locations: classpath:/mapper/**/*Mapper.xml
+
