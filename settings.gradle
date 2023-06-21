@@ -1,0 +1,3 @@
+rootProject.name = 'PlantMateRoot'
+include 'PLANT_MATE'
+include 'PlantMateServer'

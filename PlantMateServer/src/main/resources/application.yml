@@ -1,0 +1,58 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+
+# https://github.com/springdoc/springdoc-openapi-demos/blob/2.x/demo-spring-boot-3-webmvc
+#   /src/main/resources/application.yml
+management:
+  endpoints:
+    web:
+      base-path: /rest/actuator
+      exposure:
+        include: '*'
+# swagger-ui custom path
+#springdoc.swagger-ui.path: /swagger-ui.html
+#Packages to include
+springdoc:
+  cache.disabled: true
+  show-actuator: true
+  packages-to-scan: com.sqisoft.plantmate
+#  use-management-port: true
+#management:
+#  server.port: 9090
+#  endpoints.web.exposure.include: openapi, swagger-ui
+
+spring:
+  devtools:
+    livereload:
+      enabled: true
+    remote:
+      restart:
+        enabled: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/plantmate
+    username: plantmate
+    password: plantmate1!
+  web:
+    resources:
+      static-locations: file:src/main/resources/static/
+
+mybatis:
+  type-aliases-package: com.sqisoft.plantmate.PLANT_MATE
+  mapper-locations: classpath:/mapper/**/*Mapper.xml
+
+# jwt
+jwt:
+  header: Authorization
+  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+  token-validity-in-seconds: 86400
