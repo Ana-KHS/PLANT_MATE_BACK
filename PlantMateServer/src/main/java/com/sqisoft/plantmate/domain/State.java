@@ -39,7 +39,7 @@ public class State implements Serializable {
 	private Integer height;
 	private Integer leafCount;
 	
-	private List<Image> Photos;
+	private List<ImageFile> Photos;
 	
 	private LocalDateTime observedTime;
 }

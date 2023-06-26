@@ -4,6 +4,7 @@
 package com.sqisoft.plantmate.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.Data;
@@ -23,7 +24,10 @@ public class User implements Serializable {
 	private String name;
 	private String email;
 	
-	private Image photo;
+	private LocalDateTime createDate;
+	private LocalDateTime modifyDate;
 	
-	private List<Plant> plants;
+	private ImageFile photo;
+	
+	private List<MemberPlant> plants;
 }

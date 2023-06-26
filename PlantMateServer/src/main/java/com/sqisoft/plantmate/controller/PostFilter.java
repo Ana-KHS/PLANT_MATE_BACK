@@ -5,7 +5,7 @@ package com.sqisoft.plantmate.controller;
 
 import java.io.Serializable;
 
-import com.sqisoft.plantmate.domain.Post.Category;
+import com.sqisoft.plantmate.domain.Community.Category;
 
 import lombok.Data;
 

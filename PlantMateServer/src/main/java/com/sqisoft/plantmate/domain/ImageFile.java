@@ -11,11 +11,11 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class Image extends Attach {
+public class ImageFile extends UploadFile {
 
 	private static final long serialVersionUID = 4222646866437894942L;
 
-	public String getType() {
+	public final String getType() {
 		return "";
 	}
 }

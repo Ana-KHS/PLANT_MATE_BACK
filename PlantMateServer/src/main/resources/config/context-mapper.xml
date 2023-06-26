@@ -13,7 +13,7 @@
         </bean>
 
         <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-                <property name="basePackage" value="com.sqisoft.plantmate.PLANT_MATE" />
+                <property name="basePackage" value="com.sqisoft.plantmate.mapper" />
                 <property name="sqlSessionTemplate" ref="sqlSessionBean" />
         </bean>
         <jdbc:embedded-database id="dataSource"/>

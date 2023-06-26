@@ -17,13 +17,13 @@ public class Comment implements Serializable {
 
 	private static final long serialVersionUID = 553189722397206600L;
 
-	private Post post;
-	private Integer postId;
+	private Integer id;		// 코멘트ID
+	private Community post;	// 커뮤니티ID
+	private User user;		// 사용자ID
 	
-	private Integer id;
-	private String content;
-	private String writer;
-	private LocalDateTime writtenTime;
+	private String comment;
+	private LocalDateTime createDate;
+	private LocalDateTime modifyDate;
 	
-	private Image photo;
+	private ImageFile photo;
 }

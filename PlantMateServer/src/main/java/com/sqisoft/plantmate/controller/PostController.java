@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sqisoft.plantmate.common.Page;
-import com.sqisoft.plantmate.domain.Post;
+import com.sqisoft.plantmate.domain.Community;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,8 +33,8 @@ public class PostController {
 			summary="게시글 목록",
 			description="게시글 목록을 반환한다.",
 			tags={"게시글"})
-	public ResponseEntity<Page<Post>> list(PostFilter filter) {
-		return ResponseEntity.of(Optional.of(new Page<Post>()));
+	public ResponseEntity<Page<Community>> list(PostFilter filter) {
+		return ResponseEntity.of(Optional.of(new Page<Community>()));
 	}
 
 	@PostMapping("")
@@ -42,8 +42,8 @@ public class PostController {
 			summary="게시글 등록",
 			description="게시글을 등록한다.",
 			tags={"게시글"})
-	public ResponseEntity<Post> save(Post post) {
-		return ResponseEntity.of(Optional.of(new Post()));
+	public ResponseEntity<Community> save(Community post) {
+		return ResponseEntity.of(Optional.of(new Community()));
 	}
 
 	@GetMapping("/{id}")
@@ -51,8 +51,8 @@ public class PostController {
 			summary="특정 게시글 반환",
 			description="특정(id) 게시글을 반환한다.",
 			tags={"게시글"})
-	public ResponseEntity<Post> one(@PathVariable String id) {
-		return ResponseEntity.of(Optional.of(new Post()));
+	public ResponseEntity<Community> one(@PathVariable String id) {
+		return ResponseEntity.of(Optional.of(new Community()));
 	}
 
 	@PatchMapping("/{id}")
@@ -60,8 +60,8 @@ public class PostController {
 			summary="특정 게시글 수정",
 			description="특정(id) 게시글을 수정한다.",
 			tags={"게시글"})
-	public ResponseEntity<Post> save(@PathVariable String id, Post post) {
-		return ResponseEntity.of(Optional.of(new Post()));
+	public ResponseEntity<Community> save(@PathVariable String id, Community post) {
+		return ResponseEntity.of(Optional.of(new Community()));
 	}
 
 	@DeleteMapping("/{id}")
@@ -69,7 +69,7 @@ public class PostController {
 			summary="특정 게시글 삭제",
 			description="특정(id) 게시글을 삭제한다.",
 			tags={"게시글"})
-	public ResponseEntity<Post> delete(@PathVariable String id) {
-		return ResponseEntity.of(Optional.of(new Post()));
+	public ResponseEntity<Community> delete(@PathVariable String id) {
+		return ResponseEntity.of(Optional.of(new Community()));
 	}
 }
