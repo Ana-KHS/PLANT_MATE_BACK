@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sqisoft.plantmate.domain.Community.Category;
 
 import lombok.Data;
@@ -82,6 +83,7 @@ public class CommunityFilter implements Serializable {
      *
      * @mbg.generated
      */
+	@JsonIgnore
     protected String orderByClause;
 
     /**
@@ -90,6 +92,7 @@ public class CommunityFilter implements Serializable {
      *
      * @mbg.generated
      */
+	@JsonIgnore
     protected boolean distinct;
 
     /**
@@ -98,6 +101,7 @@ public class CommunityFilter implements Serializable {
      *
      * @mbg.generated
      */
+	@JsonIgnore
     protected List<Criteria> oredCriteria;
 
     /**
