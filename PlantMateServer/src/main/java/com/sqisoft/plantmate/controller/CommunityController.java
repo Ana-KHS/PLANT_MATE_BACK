@@ -14,27 +14,33 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sqisoft.plantmate.common.Page;
+import com.sqisoft.plantmate.common.Paging;
 import com.sqisoft.plantmate.domain.Community;
+import com.sqisoft.plantmate.domain.CommunityFilter;
+import com.sqisoft.plantmate.service.CommunityService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
 
 /**
  * @author jynius
  */
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/api/community")
 @Tag(name="게시글", description="게시글을 다룬다.")
-public class PostController {
+public class CommunityController {
 
+	@Resource
+	private CommunityService service;
+	
 	@GetMapping("")
 	@Operation(
 			summary="게시글 목록",
 			description="게시글 목록을 반환한다.",
 			tags={"게시글"})
-	public ResponseEntity<Page<Community>> list(PostFilter filter) {
-		return ResponseEntity.of(Optional.of(new Page<Community>()));
+	public ResponseEntity<Paging<Community>> list(CommunityFilter filter) {
+		return ResponseEntity.of(Optional.of(new Paging<Community>()));
 	}
 
 	@PostMapping("")

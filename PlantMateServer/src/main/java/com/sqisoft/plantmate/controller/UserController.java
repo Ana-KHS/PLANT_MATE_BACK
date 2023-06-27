@@ -14,18 +14,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sqisoft.plantmate.domain.User;
+import com.sqisoft.plantmate.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
 
 /**
  * @author jynius
  */
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 @Tag(name="사용자", description="사용자 정보를 다룬다.")
 public class UserController {
 
+	@Resource
+	private UserService userService;
+	
 	@PostMapping("")
 	@Operation(
 			summary="회원 가입",

@@ -13,13 +13,13 @@ import lombok.Data;
  *
  */
 @Data
-public class Page<T> implements Serializable {
+public class Paging<T> implements Serializable {
 
 	private static final long serialVersionUID = 3957518065865689739L;
-
-	private Integer total;
 	
 	private Integer current;
+
+	private Long total;
 	
 	private List<T> list;
 }

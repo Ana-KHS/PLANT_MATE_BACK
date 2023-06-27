@@ -14,27 +14,33 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sqisoft.plantmate.common.Page;
+import com.sqisoft.plantmate.common.Paging;
 import com.sqisoft.plantmate.domain.Comment;
+import com.sqisoft.plantmate.domain.CommentFilter;
+import com.sqisoft.plantmate.service.CommentService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
 
 /**
  * @author jynius
  */
 @RestController
-@RequestMapping("/api/posts/comments")
+@RequestMapping("/api/comment")
 @Tag(name="댓글", description="댓글을 다룬다.")
 public class CommentController {
 
+	@Resource
+	private CommentService service;
+	
 	@GetMapping("")
 	@Operation(
 			summary="댓글 목록",
 			description="댓글 목록을 반환한다.",
 			tags={"댓글"})
-	public ResponseEntity<Page<Comment>> list(PostFilter filter) {
-		return ResponseEntity.of(Optional.of(new Page<Comment>()));
+	public ResponseEntity<Paging<Comment>> list(CommentFilter filter) {
+		return ResponseEntity.of(Optional.of(new Paging<Comment>()));
 	}
 
 	@PostMapping("")

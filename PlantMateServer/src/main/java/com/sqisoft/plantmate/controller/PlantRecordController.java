@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sqisoft.plantmate.common.Page;
+import com.sqisoft.plantmate.common.Paging;
 import com.sqisoft.plantmate.domain.PlantRecord;
+import com.sqisoft.plantmate.domain.PlantRecordFilter;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,17 +24,17 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @author jynius
  */
 @RestController
-@RequestMapping("/api/logs")
+@RequestMapping("/api/record")
 @Tag(name="일지", description="일지를 다룬다.")
-public class LogController {
+public class PlantRecordController {
 
 	@GetMapping("")
 	@Operation(
 			summary="일지 목록 반환",
 			description="일지 목록을 반환한다.",
 			tags={"일지"})
-	public ResponseEntity<Page<PlantRecord>> list(LogFilter filter) {
-		return ResponseEntity.of(Optional.of(new Page<PlantRecord>()));
+	public ResponseEntity<Paging<PlantRecord>> list(PlantRecordFilter filter) {
+		return ResponseEntity.of(Optional.of(new Paging<PlantRecord>()));
 	}
 
 	@PostMapping("")

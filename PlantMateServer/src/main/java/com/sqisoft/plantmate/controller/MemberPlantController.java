@@ -13,27 +13,33 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sqisoft.plantmate.common.Page;
+import com.sqisoft.plantmate.common.Paging;
 import com.sqisoft.plantmate.domain.MemberPlant;
+import com.sqisoft.plantmate.domain.MemberPlantFilter;
+import com.sqisoft.plantmate.service.MemberPlantService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
 
 /**
  * @author jynius
  */
 @RestController
-@RequestMapping("/api/plants")
+@RequestMapping("/api/myplant")
 @Tag(name="식물", description="식물 정보를 다룬다.")
-public class PlantController {
+public class MemberPlantController {
 
+	@Resource
+	private MemberPlantService service;
+	
 	@GetMapping("")
 	@Operation(
 			summary="식물 목록",
 			description="식물 목록을 반환한다.",
 			tags={"식물"})
-	public ResponseEntity<Page<MemberPlant>> list(PlantFilter filter) {
-		return ResponseEntity.of(Optional.of(new Page<MemberPlant>()));
+	public ResponseEntity<Paging<MemberPlant>> list(MemberPlantFilter filter) {
+		return ResponseEntity.of(Optional.of(new Paging<MemberPlant>()));
 	}
 
 	@PostMapping("")

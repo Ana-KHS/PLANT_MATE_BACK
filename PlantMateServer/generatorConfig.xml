@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC
+  "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+  <context id="context1" targetRuntime="MyBatis3">
+   	<property name="javaFileEncoding" value="UTF-8" />
+<!--   
+	<plugin type="org.mybatis.generator.plugins.MapperConfigPlugin">
+      <property name="fileName" value="SqlMapConfig"/>
+      <property name="targetPackage" value="com.sqisoft.plantmate.mapper"/>
+   	  <property name="targetProject" value="PlantMateServer"/>
+    </plugin>
+ -->
+    <!-- MySQL의 start와 limit을 사용하게 해줌 -->
+    <!-- WARNING: The RowBoundsPlugin is not valid for MyBatis3DynamicSql. Use the built-in limit/offset support instead. -->
+    <!-- WARNING: Plugin org.mybatis.generator.plugins.RowBoundsPlugin in context context1 is invalid and will be ignored. -->
+    <!-- <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" /> -->
+    <!-- Model파일에 toString()을 추가해줌 -->
+    <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />    
+    <!-- 기본적으로 Model생성시 생성되는 example파일의 이름을 지정 -->
+    <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+        <property name="searchString" value="Example$" />
+        <property name="replaceString" value="Filter" />
+    </plugin>
+    
+    <commentGenerator>
+        <property name="suppressAllComments" value="false" />
+        <property name="suppressDate" value="true" />
+        <property name="addRemarkComments" value="true" />
+    </commentGenerator>
+        
+    <jdbcConnection
+      connectionURL="jdbc:mysql://localhost:3306/plantmate"
+      driverClass="com.mysql.cj.jdbc.Driver"
+      userId="plantmate"
+      password="PlantMate12#$" />
+      
+	<javaTypeResolver>
+    	<property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+    <javaModelGenerator
+         targetProject="PlantMateServer" targetPackage="com.sqisoft.plantmate.domain" />
+    <javaClientGenerator type="ANNOTATEDMAPPER"
+        targetProject="PlantMateServer" targetPackage="com.sqisoft.plantmate.mapper" />
+        
+    <table tableName="tb_plant_growth_file" domainObjectName="PlantGrowthFile">
+      <columnOverride column="GROWTHFILEID" property="growthfileid" />
+      <columnOverride column="GROWTHID"     property="growthid" />
+      <columnOverride column="FILEID"       property="fileid" />
+    </table>
+    <table tableName="tb_plant_record" domainObjectName="PlantRecord">
+      <generatedKey column="RECORD_ID" sqlStatement="select coalesce(max(RECORD_ID), 0) + 1 from tb_plant_record" />
+      <columnOverride column="RECORD_ID"       property="id" />
+      <columnOverride column="PLANT_ID"        property="plantId" />
+      <columnOverride column="TITLE"           property="title" />
+      <columnOverride column="DATE"            property="date" />
+      <columnOverride column="LENGTH"          property="length" />
+      <columnOverride column="LEAF_COUNT"      property="leafCount" />
+      <columnOverride column="GROWTH_STATUS"   property="growthStatus" />
+      <columnOverride column="WATER_SUPPLY"    property="waterSupply" />
+      <columnOverride column="SOIL_TYPE"       property="soilType" />
+      <columnOverride column="FERTILIZER_TYPE" property="fertilizerType" />
+      <columnOverride column="TEMPERATURE"     property="temperature" />
+      <columnOverride column="HUMIDITY"        property="humidity" />
+      <columnOverride column="GROWTH_CONTENT"  property="growthContent" />
+      <columnOverride column="REMARKS"         property="remarks" />
+    </table>
+    <table tableName="tb_file" domainObjectName="UploadFile">
+      <!-- <columnRenamingRule searchString="^FILE" replaceString="" /> -->
+      <generatedKey column="FILEID" sqlStatement="select coalesce(max(FILEID), 0) + 1 from tb_file" />
+      <columnOverride column="FILEID"       property="id" />
+      <columnOverride column="FILENAME"     property="name" />
+      <columnOverride column="FILEPATH"     property="path" />
+      <columnOverride column="FILESIZE"     property="size" />
+      <columnOverride column="USERFILENAME" property="userfilename" />
+    </table>
+    <table tableName="tb_member_plant" domainObjectName="MemberPlant">
+      <generatedKey column="PLANTID" sqlStatement="select coalesce(max(PLANTID), 0) + 1 from tb_member_plant" />
+      <columnOverride column="PLANTID"         property="id" />
+      <columnOverride column="USER_ID"         property="userId" />
+      <columnOverride column="NAME"            property="name" />
+      <columnOverride column="NICKNAME"        property="nickname" />
+      <columnOverride column="MEMO"            property="memo" />
+      <columnOverride column="THUMBNAIL"       property="thumbnail" />
+      <columnOverride column="START_DATE"      property="startDate" />
+      <columnOverride column="WATER_ALARM"     property="waterAlarm" />
+      <columnOverride column="WATER_CYCLE"     property="waterCycle" />
+      <columnOverride column="LAST_WATER_DATE" property="lastWaterDate" />
+      <columnOverride column="CREATE_DATE"     property="createDate" />
+      <columnOverride column="MODIFY_DATE"     property="modifyDate" />
+    </table>
+    <table tableName="tb_community" domainObjectName="Community">
+      <generatedKey column="COMMUNITYID" sqlStatement="select coalesce(max(COMMUNITYID), 0) + 1 from tb_community" />
+      <columnOverride column="COMMUNITYID" property="id" />
+      <columnOverride column="TITLE"       property="title" />
+      <columnOverride column="CONTENT"     property="content" />
+      <columnOverride column="CREATE_DATE" property="createDate" />
+      <columnOverride column="MODIFY_DATE" property="modifyDate" />
+      <columnOverride column="CATEGORYID"  property="categoryId" />
+      <columnOverride column="FILEID"      property="fileid" />
+      <columnOverride column="PLANTID"     property="plantid" />
+    </table>
+    <table tableName="tb_comment" domainObjectName="Comment">
+      <generatedKey column="COMMENTID" sqlStatement="select coalesce(max(COMMENTID), 0) + 1 from tb_comment" />
+      <columnOverride column="COMMENTID"   property="id" />
+      <columnOverride column="COMMUNITYID" property="communityId" />
+      <columnOverride column="USER_ID"     property="userId" />
+      <columnOverride column="COMMENT"     property="comment" />
+      <columnOverride column="CREATE_DATE" property="createDate" />
+      <columnOverride column="MODIFY_DATE" property="modifyDate" />
+      <columnOverride column="FILEID"      property="fileId" />
+    </table>
+    <table tableName="tb_bookmark" domainObjectName="Bookmark">
+      <generatedKey column="BOOKMARKID" sqlStatement="select coalesce(max(BOOKMARKID), 0) + 1 from tb_bookmark" />
+      <columnOverride column="BOOKMARKID"  property="id" />
+      <columnOverride column="USER_ID"     property="userId" />
+      <columnOverride column="COMMUNITYID" property="communityid" />
+      <columnOverride column="CREATE_DATE" property="createDate" />
+      <columnOverride column="MODIFY_DATE" property="modifyDate" />
+    </table>
+    <table tableName="tb_user" domainObjectName="User">
+      <!-- <columnRenamingRule searchString="^USER_" replaceString="" /> -->
+      <columnOverride column="USER_ID"       property="id" />
+      <columnOverride column="USER_NAME"     property="name" />
+      <columnOverride column="USER_NICKNAME" property="nickname" />
+      <columnOverride column="USER_PASSWORD" property="password" />
+      <columnOverride column="USER_EMAIL"    property="email" />
+      <columnOverride column="CREATE_DATE"   property="createDate" />
+      <columnOverride column="MODIFY_DATE"   property="modifyDate" />
+    </table>
+  </context>
+</generatorConfiguration>
