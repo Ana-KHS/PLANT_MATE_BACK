@@ -40,14 +40,13 @@
     	<property name="forceBigDecimals" value="false" />
     </javaTypeResolver>
     <javaModelGenerator
-         targetProject="PlantMateServer" targetPackage="com.sqisoft.plantmate.domain" />
+         targetProject="PlantMateServer" targetPackage="com.sqisoft.plantmate.domain0" />
     <javaClientGenerator type="ANNOTATEDMAPPER"
         targetProject="PlantMateServer" targetPackage="com.sqisoft.plantmate.mapper" />
         
     <table tableName="tb_plant_growth_file" domainObjectName="PlantGrowthFile">
-      <columnOverride column="GROWTHFILEID" property="growthfileid" />
-      <columnOverride column="GROWTHID"     property="growthid" />
-      <columnOverride column="FILEID"       property="fileid" />
+      <columnOverride column="RECORD_ID"     property="recordId" />
+      <columnOverride column="FILEID"       property="fileId" />
     </table>
     <table tableName="tb_plant_record" domainObjectName="PlantRecord">
       <generatedKey column="RECORD_ID" sqlStatement="select coalesce(max(RECORD_ID), 0) + 1 from tb_plant_record" />
@@ -98,8 +97,8 @@
       <columnOverride column="CREATE_DATE" property="createDate" />
       <columnOverride column="MODIFY_DATE" property="modifyDate" />
       <columnOverride column="CATEGORYID"  property="categoryId" />
-      <columnOverride column="FILEID"      property="fileid" />
-      <columnOverride column="PLANTID"     property="plantid" />
+      <columnOverride column="FILEID"      property="fileId" />
+      <columnOverride column="PLANTID"     property="plantId" />
     </table>
     <table tableName="tb_comment" domainObjectName="Comment">
       <generatedKey column="COMMENTID" sqlStatement="select coalesce(max(COMMENTID), 0) + 1 from tb_comment" />
@@ -115,7 +114,7 @@
       <generatedKey column="BOOKMARKID" sqlStatement="select coalesce(max(BOOKMARKID), 0) + 1 from tb_bookmark" />
       <columnOverride column="BOOKMARKID"  property="id" />
       <columnOverride column="USER_ID"     property="userId" />
-      <columnOverride column="COMMUNITYID" property="communityid" />
+      <columnOverride column="COMMUNITYID" property="communityId" />
       <columnOverride column="CREATE_DATE" property="createDate" />
       <columnOverride column="MODIFY_DATE" property="modifyDate" />
     </table>

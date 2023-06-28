@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 /**
@@ -23,6 +25,7 @@ public class PlantGrowthFileFilter implements Serializable {
      *
      * @mbg.generated
      */
+	@JsonIgnore
     protected String orderByClause;
 
     /**
@@ -31,6 +34,7 @@ public class PlantGrowthFileFilter implements Serializable {
      *
      * @mbg.generated
      */
+	@JsonIgnore
     protected boolean distinct;
 
     /**
@@ -39,6 +43,7 @@ public class PlantGrowthFileFilter implements Serializable {
      *
      * @mbg.generated
      */
+	@JsonIgnore
     protected List<Criteria> oredCriteria;
 
     /**

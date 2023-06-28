@@ -1,8 +1,16 @@
 ﻿
+DROP TABLE IF EXISTS `tb_bookmark`;
+CREATE TABLE `tb_bookmark` (
+    `BOOKMARKID`    INT         NOT NULL,
+    `USER_ID`       VARCHAR(40) NOT NULL,
+    `COMMUNITYID`   INT         NOT NULL,
+    `CREATE_DATE`   DATETIME    NOT NULL,
+    `MODIFY_DATE`   DATETIME    NOT NULL
+);
+
 DROP TABLE IF EXISTS `tb_plant_growth_file`;
 CREATE TABLE `tb_plant_growth_file` (
-    `GROWTHFILEID` INT    NOT NULL,
-    `GROWTHID`     INT    NOT NULL,
+    `RECORD_ID`    INT    NOT NULL,
     `FILEID`       INT    NOT NULL
 );
 
@@ -24,13 +32,27 @@ CREATE TABLE `tb_plant_record` (
     `REMARKS`         VARCHAR(1000) NULL
 );
 
-DROP TABLE IF EXISTS `tb_file`;
-CREATE TABLE `tb_file` (
-    `FILEID`          INT          NOT NULL,
-    `FILENAME`        VARCHAR(50)  NULL,
-    `FILEPATH`        VARCHAR(300) NULL,
-    `FILESIZE`        INT          NULL,
-    `USERFILENAME`    VARCHAR(50)  NULL
+DROP TABLE IF EXISTS `tb_comment`;
+CREATE TABLE `tb_comment` (
+    `COMMENTID`   INT          NOT NULL,
+    `COMMUNITYID` INT          NOT NULL,
+    `USER_ID`     VARCHAR(40)  NOT NULL,
+    `COMMENT`     VARCHAR(500) NOT NULL,
+    `CREATE_DATE` DATETIME     NOT NULL,
+    `MODIFY_DATE` DATETIME     NOT NULL,
+    `FILEID`      INT          NULL
+);
+
+DROP TABLE IF EXISTS `tb_community`;
+CREATE TABLE `tb_community` (
+    `COMMUNITYID`    INT         NOT NULL,
+    `TITLE`          VARCHAR(50) NOT NULL,
+    `CONTENT`        VARCHAR(50) NOT NULL,
+    `CREATE_DATE`    TIMESTAMP   NOT NULL,
+    `MODIFY_DATE`    TIMESTAMP   NOT NULL,
+    `CATEGORYID`     CHAR        NOT NULL,
+    `FILEID`         INT         NULL,
+    `PLANTID`        INT         NULL
 );
 
 DROP TABLE IF EXISTS `tb_member_plant`;
@@ -49,38 +71,6 @@ CREATE TABLE `tb_member_plant` (
     `MODIFY_DATE`     DATETIME     NOT NULL
 );
 
-DROP TABLE IF EXISTS `tb_community`;
-CREATE TABLE `tb_community` (
-    `COMMUNITYID`    INT         NOT NULL,
-    `TITLE`          VARCHAR(50) NOT NULL,
-    `CONTENT`        VARCHAR(50) NOT NULL,
-    `CREATE_DATE`    TIMESTAMP   NOT NULL,
-    `MODIFY_DATE`    TIMESTAMP   NOT NULL,
-    `CATEGORYID`     CHAR        NOT NULL,
-    `FILEID`         INT         NULL,
-    `PLANTID`        INT         NULL
-);
-
-DROP TABLE IF EXISTS `tb_comment`;
-CREATE TABLE `tb_comment` (
-    `COMMENTID`   INT          NOT NULL,
-    `COMMUNITYID` INT          NOT NULL,
-    `USER_ID`     VARCHAR(40)  NOT NULL,
-    `COMMENT`     VARCHAR(500) NOT NULL,
-    `CREATE_DATE` DATETIME     NOT NULL,
-    `MODIFY_DATE` DATETIME     NOT NULL,
-    `FILEID`      INT          NULL
-);
-
-DROP TABLE IF EXISTS `tb_bookmark`;
-CREATE TABLE `tb_bookmark` (
-    `BOOKMARKID`    INT         NOT NULL,
-    `USER_ID`       VARCHAR(40) NOT NULL,
-    `COMMUNITYID`   INT         NOT NULL,
-    `CREATE_DATE`   DATETIME    NOT NULL,
-    `MODIFY_DATE`   DATETIME    NOT NULL
-);
-
 DROP TABLE IF EXISTS `tb_user`;
 CREATE TABLE `tb_user` (
     `USER_ID`       VARCHAR(40) NOT NULL,
@@ -92,10 +82,18 @@ CREATE TABLE `tb_user` (
     `MODIFY_DATE`   DATETIME    NULL      COMMENT 'YYYY-MM-DD HH:MM:SS'
 );
 
+DROP TABLE IF EXISTS `tb_file`;
+CREATE TABLE `tb_file` (
+    `FILEID`          INT          NOT NULL,
+    `FILENAME`        VARCHAR(50)  NULL,
+    `FILEPATH`        VARCHAR(300) NULL,
+    `FILESIZE`        INT          NULL,
+    `USERFILENAME`    VARCHAR(50)  NULL
+);
+
 ALTER TABLE `tb_plant_record`
   ADD CONSTRAINT `PK_TB_PLANT_RECORD` PRIMARY KEY (
-    `RECORD_ID`,
-    `PLANT_ID`
+    `RECORD_ID`
   );
 
 ALTER TABLE `tb_file`
@@ -110,8 +108,8 @@ ALTER TABLE `tb_member_plant`
 
 ALTER TABLE `tb_plant_growth_file`
   ADD CONSTRAINT `PK_TB_PLANT_GROWTH_FILE` PRIMARY KEY (
-    `GROWTHFILEID`,
-    `GROWTHID`
+    `RECORD_ID`,
+    `FILEID`
   );
 
 ALTER TABLE `tb_community`
@@ -126,9 +124,7 @@ ALTER TABLE `tb_comment`
 
 ALTER TABLE `tb_bookmark`
   ADD CONSTRAINT `PK_TB_BOOKMARK` PRIMARY KEY (
-    `BOOKMARKID`,
-    `USER_ID`,
-    `COMMUNITYID`
+    `BOOKMARKID`
   );
 
 ALTER TABLE `tb_user`
@@ -154,7 +150,7 @@ ALTER TABLE `tb_member_plant`
 
 ALTER TABLE `tb_plant_growth_file`
   ADD CONSTRAINT `FK_tb_plant_record_TO_tb_plant_growth_file_1` FOREIGN KEY (
-    `GROWTHID`
+    `RECORD_ID`
   )
   REFERENCES `tb_plant_record` (
     `RECORD_ID`

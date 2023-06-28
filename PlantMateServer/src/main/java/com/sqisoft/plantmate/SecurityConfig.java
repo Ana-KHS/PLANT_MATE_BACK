@@ -124,9 +124,10 @@ public class SecurityConfig {
 
             .and()
             .authorizeHttpRequests()
-            .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-            .requestMatchers("/rest/actuator", "/api/users", "/api/account/login").permitAll()
-            .anyRequest().authenticated()
+//            .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+//            .requestMatchers("/rest/actuator", "/api/users", "/api/account/login").permitAll()
+//            .anyRequest().authenticated()
+            .anyRequest().permitAll()
 
             .and()
             .apply(new JwtSecurityConfig(tokenProvider));

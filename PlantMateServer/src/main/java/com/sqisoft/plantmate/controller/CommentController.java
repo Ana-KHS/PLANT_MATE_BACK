@@ -40,7 +40,10 @@ public class CommentController {
 			description="댓글 목록을 반환한다.",
 			tags={"댓글"})
 	public ResponseEntity<Paging<Comment>> list(CommentFilter filter) {
-		return ResponseEntity.of(Optional.of(new Paging<Comment>()));
+		
+		Paging<Comment> page = service.selectPage(filter);
+		
+		return ResponseEntity.of(Optional.of(page));
 	}
 
 	@PostMapping("")
@@ -49,7 +52,10 @@ public class CommentController {
 			description="댓글을 등록한다.",
 			tags={"댓글"})
 	public ResponseEntity<Comment> save(Comment post) {
-		return ResponseEntity.of(Optional.of(new Comment()));
+		
+		service.save(post);
+		
+		return ResponseEntity.of(Optional.of(post));
 	}
 
 	@GetMapping("/{id}")
@@ -57,8 +63,11 @@ public class CommentController {
 			summary="특정 댓글 반환",
 			description="특정(id) 댓글을 반환한다.",
 			tags={"댓글"})
-	public ResponseEntity<Comment> one(@PathVariable String id) {
-		return ResponseEntity.of(Optional.of(new Comment()));
+	public ResponseEntity<Comment> one(@PathVariable Integer id) {
+		
+		Comment community = service.selectOne(id);
+		
+		return ResponseEntity.of(Optional.of(community));
 	}
 
 	@PatchMapping("/{id}")
@@ -66,8 +75,12 @@ public class CommentController {
 			summary="특정 댓글 수정",
 			description="특정(id) 댓글을 수정한다.",
 			tags={"댓글"})
-	public ResponseEntity<Comment> save(@PathVariable String id, Comment post) {
-		return ResponseEntity.of(Optional.of(new Comment()));
+	public ResponseEntity<Comment> save(@PathVariable Integer id, Comment post) {
+		
+		post.setId(id);
+		service.save(post);
+		
+		return ResponseEntity.of(Optional.of(post));
 	}
 
 	@DeleteMapping("/{id}")
@@ -75,7 +88,11 @@ public class CommentController {
 			summary="특정 댓글 삭제",
 			description="특정(id) 댓글을 삭제한다.",
 			tags={"댓글"})
-	public ResponseEntity<Comment> delete(@PathVariable String id) {
-		return ResponseEntity.of(Optional.of(new Comment()));
+	public ResponseEntity<Comment> delete(@PathVariable Integer id) {
+		
+		Comment comment = service.selectOne(id);
+		service.delete(id);
+		
+		return ResponseEntity.of(Optional.of(comment));
 	}
 }

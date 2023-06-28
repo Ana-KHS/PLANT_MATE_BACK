@@ -1,12 +1,14 @@
 package com.sqisoft.plantmate.mapper;
 
-import com.sqisoft.plantmate.domain.PlantRecord;
-import com.sqisoft.plantmate.domain.PlantRecordFilter.Criteria;
-import com.sqisoft.plantmate.domain.PlantRecordFilter.Criterion;
-import com.sqisoft.plantmate.domain.PlantRecordFilter;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.ibatis.jdbc.SQL;
+
+import com.sqisoft.plantmate.domain.PlantRecord;
+import com.sqisoft.plantmate.domain.PlantRecordFilter;
+import com.sqisoft.plantmate.domain.PlantRecordFilter.Criteria;
+import com.sqisoft.plantmate.domain.PlantRecordFilter.Criterion;
 
 public class PlantRecordSqlProvider {
     /**
@@ -251,6 +253,10 @@ public class PlantRecordSqlProvider {
         SQL sql = new SQL();
         sql.UPDATE("tb_plant_record");
         
+        if (row.getPlantId() != null) {
+            sql.SET("PLANT_ID = #{plantId,jdbcType=INTEGER}");
+        }
+        
         if (row.getTitle() != null) {
             sql.SET("TITLE = #{title,jdbcType=VARCHAR}");
         }
@@ -300,7 +306,6 @@ public class PlantRecordSqlProvider {
         }
         
         sql.WHERE("RECORD_ID = #{id,jdbcType=INTEGER}");
-        sql.WHERE("PLANT_ID = #{plantId,jdbcType=INTEGER}");
         
         return sql.toString();
     }

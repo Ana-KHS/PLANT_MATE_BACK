@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.sqisoft.plantmate.common.Paging;
 import com.sqisoft.plantmate.mapper.UserMapper;
+
+import jakarta.annotation.Resource;
+
 import com.sqisoft.plantmate.domain.User;
 import com.sqisoft.plantmate.domain.UserFilter;
 
@@ -18,6 +21,7 @@ import com.sqisoft.plantmate.domain.UserFilter;
 @Service
 public class UserServiceImpl implements UserService {
 	
+	@Resource
 	private UserMapper mapper;
 
 	@Override

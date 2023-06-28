@@ -40,7 +40,7 @@ public class CommunityController {
 			summary="게시글 목록",
 			description="게시글 목록을 반환한다.",
 			tags={"게시글"})
-	public ResponseEntity<Paging<Community>> list(@RequestBody CommunityFilter filter) {
+	public ResponseEntity<Paging<Community>> list(CommunityFilter filter) {
 		
 		Paging<Community> page = service.selectPage(filter);
 		

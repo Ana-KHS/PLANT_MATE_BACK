@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.sqisoft.plantmate.common.Paging;
 import com.sqisoft.plantmate.mapper.CommunityMapper;
+
+import jakarta.annotation.Resource;
+
 import com.sqisoft.plantmate.domain.Community;
 import com.sqisoft.plantmate.domain.CommunityFilter;
 
@@ -17,7 +20,8 @@ import com.sqisoft.plantmate.domain.CommunityFilter;
  */
 @Service
 public class CommunityServiceImpl implements CommunityService {
-	
+
+	@Resource
 	private CommunityMapper mapper;
 
 	@Override

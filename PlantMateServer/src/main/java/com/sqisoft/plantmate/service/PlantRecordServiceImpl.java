@@ -8,10 +8,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.sqisoft.plantmate.common.Paging;
-import com.sqisoft.plantmate.mapper.PlantRecordMapper;
 import com.sqisoft.plantmate.domain.PlantRecord;
 import com.sqisoft.plantmate.domain.PlantRecordFilter;
-import com.sqisoft.plantmate.domain.PlantRecordKey;
+import com.sqisoft.plantmate.mapper.PlantRecordMapper;
+
+import jakarta.annotation.Resource;
 
 /**
  * @author jynius
@@ -19,6 +20,7 @@ import com.sqisoft.plantmate.domain.PlantRecordKey;
 @Service
 public class PlantRecordServiceImpl implements PlantRecordService {
 	
+	@Resource
 	private PlantRecordMapper mapper;
 
 	@Override
@@ -42,7 +44,7 @@ public class PlantRecordServiceImpl implements PlantRecordService {
 	}
 
 	@Override
-	public PlantRecord selectOne(PlantRecordKey id) {
+	public PlantRecord selectOne(Integer id) {
 		return mapper.selectByPrimaryKey(id);
 	}
 	
@@ -62,7 +64,7 @@ public class PlantRecordServiceImpl implements PlantRecordService {
 	}
 
 	@Override
-	public int delete(PlantRecordKey id) {
+	public int delete(Integer id) {
 		return mapper.deleteByPrimaryKey(id);
 	}
 }

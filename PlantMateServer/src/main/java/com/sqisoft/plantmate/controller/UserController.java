@@ -6,10 +6,8 @@ package com.sqisoft.plantmate.controller;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,32 +27,42 @@ import jakarta.annotation.Resource;
 public class UserController {
 
 	@Resource
-	private UserService userService;
+	private UserService service;
 	
 	@PostMapping("")
 	@Operation(
 			summary="회원 가입",
 			description="사용자 정보를 등록한다.",
 			tags={"사용자"})
-	public ResponseEntity<User> save(User user) {
-		return ResponseEntity.of(Optional.of(new User()));
+	public ResponseEntity<User> save(@RequestBody User user) {
+		
+		service.insert(user);
+		
+		return ResponseEntity.of(Optional.of(user));
 	}
 
-	@GetMapping("/{id}")
-	@Operation(
-			summary="특정 사용자 정보 반환",
-			description="특정(id) 사용자 정보를 반환한다.",
-			tags={"사용자"})
-	public ResponseEntity<User> one(@PathVariable("id") String id) {
-		return ResponseEntity.of(Optional.of(new User()));
-	}
+//	@GetMapping("/{id}")
+//	@Operation(
+//			summary="특정 사용자 정보 반환",
+//			description="특정(id) 사용자 정보를 반환한다.",
+//			tags={"사용자"})
+//	public ResponseEntity<User> one(@PathVariable("id") String id) {
+//		
+//		User user = service.selectOne(id);
+//		
+//		return ResponseEntity.of(Optional.of(user));
+//	}
 
-	@PatchMapping("/{id}")
-	@Operation(
-			summary="특정 회원 정보 수정",
-			description="특정(id) 회원 정보를 수정한다.",
-			tags={"사용자"})
-	public ResponseEntity<User> save(@PathVariable("id") String id, User user) {
-		return ResponseEntity.of(Optional.of(new User()));
-	}
+//	@PatchMapping("/{id}")
+//	@Operation(
+//			summary="특정 회원 정보 수정",
+//			description="특정(id) 회원 정보를 수정한다.",
+//			tags={"사용자"})
+//	public ResponseEntity<User> save(@PathVariable("id") String id, User user) {
+//		
+//		user.setId(id);
+//		service.update(user);
+//		
+//		return ResponseEntity.of(Optional.of(user));
+//	}
 }

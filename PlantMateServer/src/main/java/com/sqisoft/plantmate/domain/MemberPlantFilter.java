@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 /**
@@ -42,6 +44,7 @@ public class MemberPlantFilter implements Serializable {
      *
      * @mbg.generated
      */
+	@JsonIgnore
     protected String orderByClause;
 
     /**
@@ -50,6 +53,7 @@ public class MemberPlantFilter implements Serializable {
      *
      * @mbg.generated
      */
+	@JsonIgnore
     protected boolean distinct;
 
     /**
@@ -58,6 +62,7 @@ public class MemberPlantFilter implements Serializable {
      *
      * @mbg.generated
      */
+	@JsonIgnore
     protected List<Criteria> oredCriteria;
 
     /**

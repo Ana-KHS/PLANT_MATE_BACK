@@ -1,12 +1,14 @@
 package com.sqisoft.plantmate.mapper;
 
-import com.sqisoft.plantmate.domain.Comment;
-import com.sqisoft.plantmate.domain.CommentFilter.Criteria;
-import com.sqisoft.plantmate.domain.CommentFilter.Criterion;
-import com.sqisoft.plantmate.domain.CommentFilter;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.ibatis.jdbc.SQL;
+
+import com.sqisoft.plantmate.domain.Comment;
+import com.sqisoft.plantmate.domain.CommentFilter;
+import com.sqisoft.plantmate.domain.CommentFilter.Criteria;
+import com.sqisoft.plantmate.domain.CommentFilter.Criterion;
 
 public class CommentSqlProvider {
     /**

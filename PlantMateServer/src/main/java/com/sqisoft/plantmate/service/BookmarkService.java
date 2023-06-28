@@ -8,7 +8,6 @@ import java.util.List;
 import com.sqisoft.plantmate.common.Paging;
 import com.sqisoft.plantmate.domain.Bookmark;
 import com.sqisoft.plantmate.domain.BookmarkFilter;
-import com.sqisoft.plantmate.domain.BookmarkKey;
 
 /**
  * @author jynius
@@ -21,7 +20,7 @@ public interface BookmarkService {
 
 	List<Bookmark> selectList(BookmarkFilter filter);
 
-	Bookmark selectOne(BookmarkKey id);
+	Bookmark selectOne(Integer id);
 	
 	int save(Bookmark row);
 
@@ -29,5 +28,5 @@ public interface BookmarkService {
 
 	int update(Bookmark row);
 	
-	int delete(BookmarkKey id);
+	int delete(Integer id);
 }

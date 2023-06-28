@@ -1,12 +1,14 @@
 package com.sqisoft.plantmate.mapper;
 
-import com.sqisoft.plantmate.domain.Community;
-import com.sqisoft.plantmate.domain.CommunityFilter.Criteria;
-import com.sqisoft.plantmate.domain.CommunityFilter.Criterion;
-import com.sqisoft.plantmate.domain.CommunityFilter;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.ibatis.jdbc.SQL;
+
+import com.sqisoft.plantmate.domain.Community;
+import com.sqisoft.plantmate.domain.CommunityFilter;
+import com.sqisoft.plantmate.domain.CommunityFilter.Criteria;
+import com.sqisoft.plantmate.domain.CommunityFilter.Criterion;
 
 public class CommunitySqlProvider {
     /**
@@ -67,12 +69,12 @@ public class CommunitySqlProvider {
             sql.VALUES("CATEGORYID", "#{categoryId,jdbcType=CHAR}");
         }
         
-        if (row.getFileid() != null) {
-            sql.VALUES("FILEID", "#{fileid,jdbcType=INTEGER}");
+        if (row.getFileId() != null) {
+            sql.VALUES("FILEID", "#{fileId,jdbcType=INTEGER}");
         }
         
-        if (row.getPlantid() != null) {
-            sql.VALUES("PLANTID", "#{plantid,jdbcType=INTEGER}");
+        if (row.getPlantId() != null) {
+            sql.VALUES("PLANTID", "#{plantId,jdbcType=INTEGER}");
         }
         
         return sql.toString();
@@ -145,12 +147,12 @@ public class CommunitySqlProvider {
             sql.SET("CATEGORYID = #{row.categoryId,jdbcType=CHAR}");
         }
         
-        if (row.getFileid() != null) {
-            sql.SET("FILEID = #{row.fileid,jdbcType=INTEGER}");
+        if (row.getFileId() != null) {
+            sql.SET("FILEID = #{row.fileId,jdbcType=INTEGER}");
         }
         
-        if (row.getPlantid() != null) {
-            sql.SET("PLANTID = #{row.plantid,jdbcType=INTEGER}");
+        if (row.getPlantId() != null) {
+            sql.SET("PLANTID = #{row.plantId,jdbcType=INTEGER}");
         }
         
         applyWhere(sql, example, true);
@@ -173,8 +175,8 @@ public class CommunitySqlProvider {
         sql.SET("CREATE_DATE = #{row.createDate,jdbcType=TIMESTAMP}");
         sql.SET("MODIFY_DATE = #{row.modifyDate,jdbcType=TIMESTAMP}");
         sql.SET("CATEGORYID = #{row.categoryId,jdbcType=CHAR}");
-        sql.SET("FILEID = #{row.fileid,jdbcType=INTEGER}");
-        sql.SET("PLANTID = #{row.plantid,jdbcType=INTEGER}");
+        sql.SET("FILEID = #{row.fileId,jdbcType=INTEGER}");
+        sql.SET("PLANTID = #{row.plantId,jdbcType=INTEGER}");
         
         CommunityFilter example = (CommunityFilter) parameter.get("example");
         applyWhere(sql, example, true);
@@ -211,12 +213,12 @@ public class CommunitySqlProvider {
             sql.SET("CATEGORYID = #{categoryId,jdbcType=CHAR}");
         }
         
-        if (row.getFileid() != null) {
-            sql.SET("FILEID = #{fileid,jdbcType=INTEGER}");
+        if (row.getFileId() != null) {
+            sql.SET("FILEID = #{fileId,jdbcType=INTEGER}");
         }
         
-        if (row.getPlantid() != null) {
-            sql.SET("PLANTID = #{plantid,jdbcType=INTEGER}");
+        if (row.getPlantId() != null) {
+            sql.SET("PLANTID = #{plantId,jdbcType=INTEGER}");
         }
         
         sql.WHERE("COMMUNITYID = #{id,jdbcType=INTEGER}");

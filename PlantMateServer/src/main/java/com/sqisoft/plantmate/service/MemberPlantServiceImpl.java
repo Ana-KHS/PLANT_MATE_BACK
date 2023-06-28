@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.sqisoft.plantmate.common.Paging;
 import com.sqisoft.plantmate.mapper.MemberPlantMapper;
+
+import jakarta.annotation.Resource;
+
 import com.sqisoft.plantmate.domain.MemberPlant;
 import com.sqisoft.plantmate.domain.MemberPlantFilter;
 
@@ -18,6 +21,7 @@ import com.sqisoft.plantmate.domain.MemberPlantFilter;
 @Service
 public class MemberPlantServiceImpl implements MemberPlantService {
 	
+	@Resource
 	private MemberPlantMapper mapper;
 
 	@Override

@@ -1,12 +1,14 @@
 package com.sqisoft.plantmate.mapper;
 
-import com.sqisoft.plantmate.domain.Bookmark;
-import com.sqisoft.plantmate.domain.BookmarkFilter.Criteria;
-import com.sqisoft.plantmate.domain.BookmarkFilter.Criterion;
-import com.sqisoft.plantmate.domain.BookmarkFilter;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.ibatis.jdbc.SQL;
+
+import com.sqisoft.plantmate.domain.Bookmark;
+import com.sqisoft.plantmate.domain.BookmarkFilter;
+import com.sqisoft.plantmate.domain.BookmarkFilter.Criteria;
+import com.sqisoft.plantmate.domain.BookmarkFilter.Criterion;
 
 public class BookmarkSqlProvider {
     /**
@@ -52,7 +54,7 @@ public class BookmarkSqlProvider {
         }
         
         if (row.getCommunityId() != null) {
-            sql.VALUES("COMMUNITYID", "#{communityid,jdbcType=INTEGER}");
+            sql.VALUES("COMMUNITYID", "#{communityId,jdbcType=INTEGER}");
         }
         
         if (row.getCreateDate() != null) {
@@ -115,7 +117,7 @@ public class BookmarkSqlProvider {
         }
         
         if (row.getCommunityId() != null) {
-            sql.SET("COMMUNITYID = #{row.communityid,jdbcType=INTEGER}");
+            sql.SET("COMMUNITYID = #{row.communityId,jdbcType=INTEGER}");
         }
         
         if (row.getCreateDate() != null) {
@@ -142,7 +144,7 @@ public class BookmarkSqlProvider {
         
         sql.SET("BOOKMARKID = #{row.id,jdbcType=INTEGER}");
         sql.SET("USER_ID = #{row.userId,jdbcType=VARCHAR}");
-        sql.SET("COMMUNITYID = #{row.communityid,jdbcType=INTEGER}");
+        sql.SET("COMMUNITYID = #{row.communityId,jdbcType=INTEGER}");
         sql.SET("CREATE_DATE = #{row.createDate,jdbcType=TIMESTAMP}");
         sql.SET("MODIFY_DATE = #{row.modifyDate,jdbcType=TIMESTAMP}");
         
@@ -161,6 +163,14 @@ public class BookmarkSqlProvider {
         SQL sql = new SQL();
         sql.UPDATE("tb_bookmark");
         
+        if (row.getUserId() != null) {
+            sql.SET("USER_ID = #{userId,jdbcType=VARCHAR}");
+        }
+        
+        if (row.getCommunityId() != null) {
+            sql.SET("COMMUNITYID = #{communityId,jdbcType=INTEGER}");
+        }
+        
         if (row.getCreateDate() != null) {
             sql.SET("CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}");
         }
@@ -170,8 +180,6 @@ public class BookmarkSqlProvider {
         }
         
         sql.WHERE("BOOKMARKID = #{id,jdbcType=INTEGER}");
-        sql.WHERE("USER_ID = #{userId,jdbcType=VARCHAR}");
-        sql.WHERE("COMMUNITYID = #{communityid,jdbcType=INTEGER}");
         
         return sql.toString();
     }

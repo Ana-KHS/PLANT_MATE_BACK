@@ -41,6 +41,17 @@ public class Community implements Serializable {
 		public String getTitle() {
 			return this.title;
 		}
+
+		static Category of(String id) {
+			
+			for(Category c: values()) {
+				if(c.getId().equals(id)) {
+					return c;
+				}
+			}
+
+			return null;
+		}
 	}
 	
     /**
@@ -95,7 +106,7 @@ public class Community implements Serializable {
      *
      * @mbg.generated
      */
-    private String categoryId;
+    private Category category;
 
     /**
      *
@@ -104,7 +115,7 @@ public class Community implements Serializable {
      *
      * @mbg.generated
      */
-    private Integer fileid;
+    private Integer fileId;
 
     /**
      *
@@ -113,5 +124,16 @@ public class Community implements Serializable {
      *
      * @mbg.generated
      */
-    private Integer plantid;
+    private Integer plantId;
+    
+    /**
+     * @return
+     */
+    public String getCategoryId() {
+    	return category==null? null: category.getId();
+    }
+    
+    public void setCategoryId(String id) {
+    	this.category = Category.of(id);
+    }
 }

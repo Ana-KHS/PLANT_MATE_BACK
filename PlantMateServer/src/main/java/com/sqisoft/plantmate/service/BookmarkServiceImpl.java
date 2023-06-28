@@ -8,10 +8,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.sqisoft.plantmate.common.Paging;
-import com.sqisoft.plantmate.mapper.BookmarkMapper;
 import com.sqisoft.plantmate.domain.Bookmark;
 import com.sqisoft.plantmate.domain.BookmarkFilter;
-import com.sqisoft.plantmate.domain.BookmarkKey;
+import com.sqisoft.plantmate.mapper.BookmarkMapper;
+
+import jakarta.annotation.Resource;
 
 /**
  * @author jynius
@@ -19,6 +20,7 @@ import com.sqisoft.plantmate.domain.BookmarkKey;
 @Service
 public class BookmarkServiceImpl implements BookmarkService {
 	
+	@Resource
 	private BookmarkMapper mapper;
 
 	@Override
@@ -42,7 +44,7 @@ public class BookmarkServiceImpl implements BookmarkService {
 	}
 
 	@Override
-	public Bookmark selectOne(BookmarkKey id) {
+	public Bookmark selectOne(Integer id) {
 		return mapper.selectByPrimaryKey(id);
 	}
 	
@@ -62,7 +64,7 @@ public class BookmarkServiceImpl implements BookmarkService {
 	}
 
 	@Override
-	public int delete(BookmarkKey id) {
+	public int delete(Integer id) {
 		return mapper.deleteByPrimaryKey(id);
 	}
 }

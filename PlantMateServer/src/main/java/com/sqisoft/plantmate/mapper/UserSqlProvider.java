@@ -1,12 +1,14 @@
 package com.sqisoft.plantmate.mapper;
 
-import com.sqisoft.plantmate.domain.User;
-import com.sqisoft.plantmate.domain.UserFilter.Criteria;
-import com.sqisoft.plantmate.domain.UserFilter.Criterion;
-import com.sqisoft.plantmate.domain.UserFilter;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.ibatis.jdbc.SQL;
+
+import com.sqisoft.plantmate.domain.User;
+import com.sqisoft.plantmate.domain.UserFilter;
+import com.sqisoft.plantmate.domain.UserFilter.Criteria;
+import com.sqisoft.plantmate.domain.UserFilter.Criterion;
 
 public class UserSqlProvider {
     /**

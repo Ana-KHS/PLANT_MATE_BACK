@@ -40,7 +40,10 @@ public class BookmarkController {
 			description="북마크 목록을 반환한다.",
 			tags={"북마크"})
 	public ResponseEntity<Paging<Bookmark>> list(BookmarkFilter filter) {
-		return ResponseEntity.of(Optional.of(new Paging<Bookmark>()));
+		
+		Paging<Bookmark> page = service.selectPage(filter);
+		
+		return ResponseEntity.of(Optional.of(page));
 	}
 
 	@PostMapping("")
@@ -49,7 +52,10 @@ public class BookmarkController {
 			description="북마크을 등록한다.",
 			tags={"북마크"})
 	public ResponseEntity<Bookmark> save(Bookmark post) {
-		return ResponseEntity.of(Optional.of(new Bookmark()));
+		
+		service.save(post);
+		
+		return ResponseEntity.of(Optional.of(post));
 	}
 
 	@GetMapping("/{id}")
@@ -57,8 +63,11 @@ public class BookmarkController {
 			summary="특정 북마크 반환",
 			description="특정(id) 북마크을 반환한다.",
 			tags={"북마크"})
-	public ResponseEntity<Bookmark> one(@PathVariable String id) {
-		return ResponseEntity.of(Optional.of(new Bookmark()));
+	public ResponseEntity<Bookmark> one(@PathVariable Integer id) {
+		
+		Bookmark bookmark = service.selectOne(id);
+		
+		return ResponseEntity.of(Optional.of(bookmark));
 	}
 
 	@PatchMapping("/{id}")
@@ -66,8 +75,12 @@ public class BookmarkController {
 			summary="특정 북마크 수정",
 			description="특정(id) 북마크을 수정한다.",
 			tags={"북마크"})
-	public ResponseEntity<Bookmark> save(@PathVariable String id, Bookmark post) {
-		return ResponseEntity.of(Optional.of(new Bookmark()));
+	public ResponseEntity<Bookmark> save(@PathVariable Integer id, Bookmark post) {
+		
+		post.setId(id);
+		service.save(post);
+		
+		return ResponseEntity.of(Optional.of(post));
 	}
 
 	@DeleteMapping("/{id}")
@@ -75,7 +88,11 @@ public class BookmarkController {
 			summary="특정 북마크 삭제",
 			description="특정(id) 북마크을 삭제한다.",
 			tags={"북마크"})
-	public ResponseEntity<Bookmark> delete(@PathVariable String id) {
-		return ResponseEntity.of(Optional.of(new Bookmark()));
+	public ResponseEntity<Bookmark> delete(@PathVariable Integer id) {
+		
+		Bookmark bookmark = service.selectOne(id);
+		service.delete(id);
+		
+		return ResponseEntity.of(Optional.of(bookmark));
 	}
 }

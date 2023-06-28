@@ -8,7 +8,6 @@ import java.util.List;
 import com.sqisoft.plantmate.common.Paging;
 import com.sqisoft.plantmate.domain.PlantRecord;
 import com.sqisoft.plantmate.domain.PlantRecordFilter;
-import com.sqisoft.plantmate.domain.PlantRecordKey;
 
 /**
  * @author jynius
@@ -21,7 +20,7 @@ public interface PlantRecordService {
 
 	List<PlantRecord> selectList(PlantRecordFilter filter);
 
-	PlantRecord selectOne(PlantRecordKey id);
+	PlantRecord selectOne(Integer id);
 	
 	int save(PlantRecord row);
 
@@ -29,5 +28,5 @@ public interface PlantRecordService {
 
 	int update(PlantRecord row);
 	
-	int delete(PlantRecordKey id);
+	int delete(Integer id);
 }

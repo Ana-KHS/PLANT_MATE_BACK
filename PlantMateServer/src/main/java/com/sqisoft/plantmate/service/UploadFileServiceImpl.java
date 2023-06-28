@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.sqisoft.plantmate.common.Paging;
 import com.sqisoft.plantmate.mapper.UploadFileMapper;
+
+import jakarta.annotation.Resource;
+
 import com.sqisoft.plantmate.domain.UploadFile;
 import com.sqisoft.plantmate.domain.UploadFileFilter;
 
@@ -18,6 +21,7 @@ import com.sqisoft.plantmate.domain.UploadFileFilter;
 @Service
 public class UploadFileServiceImpl implements UploadFileService {
 	
+	@Resource
 	private UploadFileMapper mapper;
 
 	@Override

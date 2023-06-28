@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.sqisoft.plantmate.common.Paging;
 import com.sqisoft.plantmate.mapper.CommentMapper;
+
+import jakarta.annotation.Resource;
+
 import com.sqisoft.plantmate.domain.Comment;
 import com.sqisoft.plantmate.domain.CommentFilter;
 
@@ -18,6 +21,7 @@ import com.sqisoft.plantmate.domain.CommentFilter;
 @Service
 public class CommentServiceImpl implements CommentService {
 	
+	@Resource
 	private CommentMapper mapper;
 
 	@Override

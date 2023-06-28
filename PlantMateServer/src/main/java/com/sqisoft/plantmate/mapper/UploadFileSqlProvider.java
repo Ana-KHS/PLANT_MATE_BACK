@@ -1,12 +1,14 @@
 package com.sqisoft.plantmate.mapper;
 
-import com.sqisoft.plantmate.domain.UploadFile;
-import com.sqisoft.plantmate.domain.UploadFileFilter.Criteria;
-import com.sqisoft.plantmate.domain.UploadFileFilter.Criterion;
-import com.sqisoft.plantmate.domain.UploadFileFilter;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.ibatis.jdbc.SQL;
+
+import com.sqisoft.plantmate.domain.UploadFile;
+import com.sqisoft.plantmate.domain.UploadFileFilter;
+import com.sqisoft.plantmate.domain.UploadFileFilter.Criteria;
+import com.sqisoft.plantmate.domain.UploadFileFilter.Criterion;
 
 public class UploadFileSqlProvider {
     /**
