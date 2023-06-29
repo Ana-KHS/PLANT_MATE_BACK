@@ -94,7 +94,7 @@ public class SecurityConfig {
         config.addAllowedMethod("*");
 
         // 서버 경로로 접근하는 경우 CORS 설정 적용
-        source.registerCorsConfiguration("/api/s/**", config);
+        source.registerCorsConfiguration("/api/**", config);
         return new CorsFilter(source);
     }
 
