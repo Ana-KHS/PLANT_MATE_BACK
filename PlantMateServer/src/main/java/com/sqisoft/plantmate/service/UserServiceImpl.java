@@ -36,12 +36,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public long selectCount(UserFilter filter) {
-		return mapper.countByExample(filter);
+		return mapper.countByFilter(filter);
 	}
 	
 	@Override
 	public List<User> selectList(UserFilter filter) {
-		return mapper.selectByExample(filter);
+		return mapper.selectByFilter(filter);
 	}
 
 	@Override

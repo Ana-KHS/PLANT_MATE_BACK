@@ -36,12 +36,12 @@ public class UploadFileServiceImpl implements UploadFileService {
 
 	@Override
 	public long selectCount(UploadFileFilter filter) {
-		return mapper.countByExample(filter);
+		return mapper.countByFilter(filter);
 	}
 	
 	@Override
 	public List<UploadFile> selectList(UploadFileFilter filter) {
-		return mapper.selectByExample(filter);
+		return mapper.selectByFilter(filter);
 	}
 
 	@Override

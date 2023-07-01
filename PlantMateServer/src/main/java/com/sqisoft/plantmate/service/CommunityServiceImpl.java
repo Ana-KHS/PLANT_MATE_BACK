@@ -36,12 +36,12 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public long selectCount(CommunityFilter filter) {
-		return mapper.countByExample(filter);
+		return mapper.countByFilter(filter);
 	}
 	
 	@Override
 	public List<Community> selectList(CommunityFilter filter) {
-		return mapper.selectByExample(filter);
+		return mapper.selectByFilter(filter);
 	}
 
 	@Override

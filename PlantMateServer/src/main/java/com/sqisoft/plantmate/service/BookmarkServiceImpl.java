@@ -35,12 +35,12 @@ public class BookmarkServiceImpl implements BookmarkService {
 
 	@Override
 	public long selectCount(BookmarkFilter filter) {
-		return mapper.countByExample(filter);
+		return mapper.countByFilter(filter);
 	}
 	
 	@Override
 	public List<Bookmark> selectList(BookmarkFilter filter) {
-		return mapper.selectByExample(filter);
+		return mapper.selectByFilter(filter);
 	}
 
 	@Override

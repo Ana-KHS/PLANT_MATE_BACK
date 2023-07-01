@@ -36,12 +36,12 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public long selectCount(CommentFilter filter) {
-		return mapper.countByExample(filter);
+		return mapper.countByFilter(filter);
 	}
 	
 	@Override
 	public List<Comment> selectList(CommentFilter filter) {
-		return mapper.selectByExample(filter);
+		return mapper.selectByFilter(filter);
 	}
 
 	@Override

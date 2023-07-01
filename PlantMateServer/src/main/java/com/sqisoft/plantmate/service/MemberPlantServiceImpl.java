@@ -36,12 +36,12 @@ public class MemberPlantServiceImpl implements MemberPlantService {
 
 	@Override
 	public long selectCount(MemberPlantFilter filter) {
-		return mapper.countByExample(filter);
+		return mapper.countByFilter(filter);
 	}
 	
 	@Override
 	public List<MemberPlant> selectList(MemberPlantFilter filter) {
-		return mapper.selectByExample(filter);
+		return mapper.selectByFilter(filter);
 	}
 
 	@Override

@@ -35,12 +35,12 @@ public class PlantRecordServiceImpl implements PlantRecordService {
 
 	@Override
 	public long selectCount(PlantRecordFilter filter) {
-		return mapper.countByExample(filter);
+		return mapper.countByFilter(filter);
 	}
 	
 	@Override
 	public List<PlantRecord> selectList(PlantRecordFilter filter) {
-		return mapper.selectByExample(filter);
+		return mapper.selectByFilter(filter);
 	}
 
 	@Override
