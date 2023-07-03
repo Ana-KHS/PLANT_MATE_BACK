@@ -85,9 +85,11 @@ CREATE TABLE `tb_user` (
 DROP TABLE IF EXISTS `tb_file`;
 CREATE TABLE `tb_file` (
     `FILEID`          INT          NOT NULL,
+    `FILEPARAM`       VARCHAR(50)  NULL,
     `FILENAME`        VARCHAR(50)  NULL,
     `FILEPATH`        VARCHAR(300) NULL,
-    `FILESIZE`        INT          NULL,
+    `FILETYPE`        VARCHAR(300) NULL,
+    `FILESIZE`        BIGINT       NULL,
     `USERFILENAME`    VARCHAR(50)  NULL
 );
 

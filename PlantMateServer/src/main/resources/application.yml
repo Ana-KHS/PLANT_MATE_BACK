@@ -46,6 +46,12 @@ spring:
   web:
     resources:
       static-locations: file:src/main/resources/static/
+  servlet:
+    multipart:
+      max-request-size: 1GB
+      max-file-size: 1GB
+#      root: C:\\upload
+      location: C:\\upload
 
 mybatis:
   type-aliases-package: com.sqisoft.plantmate.PLANT_MATE

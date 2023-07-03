@@ -158,6 +158,76 @@ public class UploadFileFilter extends BaseFilter<UploadFileFilter.Criteria> {
             return (Criteria) this;
         }
 
+        public Criteria addParamIsNull() {
+            addCriterion("FILEPARAM is null");
+            return (Criteria) this;
+        }
+
+        public Criteria addParamIsNotNull() {
+            addCriterion("FILEPARAM is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria addParamEqualTo(String value) {
+            addCriterion("FILEPARAM =", value);
+            return (Criteria) this;
+        }
+
+        public Criteria addParamNotEqualTo(String value) {
+            addCriterion("FILEPARAM <>", value);
+            return (Criteria) this;
+        }
+
+        public Criteria addParamGreaterThan(String value) {
+            addCriterion("FILEPARAM >", value);
+            return (Criteria) this;
+        }
+
+        public Criteria addParamGreaterThanOrEqualTo(String value) {
+            addCriterion("FILEPARAM >=", value);
+            return (Criteria) this;
+        }
+
+        public Criteria addParamLessThan(String value) {
+            addCriterion("FILEPARAM <", value);
+            return (Criteria) this;
+        }
+
+        public Criteria addParamLessThanOrEqualTo(String value) {
+            addCriterion("FILEPARAM <=", value);
+            return (Criteria) this;
+        }
+
+        public Criteria addParamLike(String value) {
+            addCriterion("FILEPARAM like", value);
+            return (Criteria) this;
+        }
+
+        public Criteria addParamNotLike(String value) {
+            addCriterion("FILEPARAM not like", value);
+            return (Criteria) this;
+        }
+
+        public Criteria addParamIn(List<String> values) {
+            addCriterion("FILEPARAM in", values);
+            return (Criteria) this;
+        }
+
+        public Criteria addParamNotIn(List<String> values) {
+            addCriterion("FILEPARAM not in", values);
+            return (Criteria) this;
+        }
+
+        public Criteria addParamBetween(String value1, String value2) {
+            addCriterion("FILEPARAM between", value1, value2);
+            return (Criteria) this;
+        }
+
+        public Criteria addParamNotBetween(String value1, String value2) {
+            addCriterion("FILEPARAM not between", value1, value2);
+            return (Criteria) this;
+        }
+
         public Criteria addPathIsNull() {
             addCriterion("FILEPATH is null");
             return (Criteria) this;
@@ -228,6 +298,76 @@ public class UploadFileFilter extends BaseFilter<UploadFileFilter.Criteria> {
             return (Criteria) this;
         }
 
+        public Criteria addTypeIsNull() {
+            addCriterion("FILETYPE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria addTypeIsNotNull() {
+            addCriterion("FILETYPE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria addTypeEqualTo(String value) {
+            addCriterion("FILETYPE =", value);
+            return (Criteria) this;
+        }
+
+        public Criteria addTypeNotEqualTo(String value) {
+            addCriterion("FILETYPE <>", value);
+            return (Criteria) this;
+        }
+
+        public Criteria addTypeGreaterThan(String value) {
+            addCriterion("FILETYPE >", value);
+            return (Criteria) this;
+        }
+
+        public Criteria addTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("FILETYPE >=", value);
+            return (Criteria) this;
+        }
+
+        public Criteria addTypeLessThan(String value) {
+            addCriterion("FILETYPE <", value);
+            return (Criteria) this;
+        }
+
+        public Criteria addTypeLessThanOrEqualTo(String value) {
+            addCriterion("FILETYPE <=", value);
+            return (Criteria) this;
+        }
+
+        public Criteria addTypeLike(String value) {
+            addCriterion("FILETYPE like", value);
+            return (Criteria) this;
+        }
+
+        public Criteria addTypeNotLike(String value) {
+            addCriterion("FILETYPE not like", value);
+            return (Criteria) this;
+        }
+
+        public Criteria addTypeIn(List<String> values) {
+            addCriterion("FILETYPE in", values);
+            return (Criteria) this;
+        }
+
+        public Criteria addTypeNotIn(List<String> values) {
+            addCriterion("FILETYPE not in", values);
+            return (Criteria) this;
+        }
+
+        public Criteria addTypeBetween(String value1, String value2) {
+            addCriterion("FILETYPE between", value1, value2);
+            return (Criteria) this;
+        }
+
+        public Criteria addTypeNotBetween(String value1, String value2) {
+            addCriterion("FILETYPE not between", value1, value2);
+            return (Criteria) this;
+        }
+
         public Criteria addSizeIsNull() {
             addCriterion("FILESIZE is null");
             return (Criteria) this;
@@ -238,52 +378,52 @@ public class UploadFileFilter extends BaseFilter<UploadFileFilter.Criteria> {
             return (Criteria) this;
         }
 
-        public Criteria addSizeEqualTo(Integer value) {
+        public Criteria addSizeEqualTo(Long value) {
             addCriterion("FILESIZE =", value);
             return (Criteria) this;
         }
 
-        public Criteria addSizeNotEqualTo(Integer value) {
+        public Criteria addSizeNotEqualTo(Long value) {
             addCriterion("FILESIZE <>", value);
             return (Criteria) this;
         }
 
-        public Criteria addSizeGreaterThan(Integer value) {
+        public Criteria addSizeGreaterThan(Long value) {
             addCriterion("FILESIZE >", value);
             return (Criteria) this;
         }
 
-        public Criteria addSizeGreaterThanOrEqualTo(Integer value) {
+        public Criteria addSizeGreaterThanOrEqualTo(Long value) {
             addCriterion("FILESIZE >=", value);
             return (Criteria) this;
         }
 
-        public Criteria addSizeLessThan(Integer value) {
+        public Criteria addSizeLessThan(Long value) {
             addCriterion("FILESIZE <", value);
             return (Criteria) this;
         }
 
-        public Criteria addSizeLessThanOrEqualTo(Integer value) {
+        public Criteria addSizeLessThanOrEqualTo(Long value) {
             addCriterion("FILESIZE <=", value);
             return (Criteria) this;
         }
 
-        public Criteria addSizeIn(List<Integer> values) {
+        public Criteria addSizeIn(List<Long> values) {
             addCriterion("FILESIZE in", values);
             return (Criteria) this;
         }
 
-        public Criteria addSizeNotIn(List<Integer> values) {
+        public Criteria addSizeNotIn(List<Long> values) {
             addCriterion("FILESIZE not in", values);
             return (Criteria) this;
         }
 
-        public Criteria addSizeBetween(Integer value1, Integer value2) {
+        public Criteria addSizeBetween(Long value1, Long value2) {
             addCriterion("FILESIZE between", value1, value2);
             return (Criteria) this;
         }
 
-        public Criteria addSizeNotBetween(Integer value1, Integer value2) {
+        public Criteria addSizeNotBetween(Long value1, Long value2) {
             addCriterion("FILESIZE not between", value1, value2);
             return (Criteria) this;
         }

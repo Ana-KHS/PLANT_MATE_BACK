@@ -41,9 +41,11 @@ public interface UploadFileMapper {
     @SelectProvider(type=UploadFileSqlProvider.class, method="selectByFilter")
     @Results({
         @Result(column="FILEID", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="FILEPARAM", property="param", jdbcType=JdbcType.VARCHAR),
         @Result(column="FILENAME", property="name", jdbcType=JdbcType.VARCHAR),
         @Result(column="FILEPATH", property="path", jdbcType=JdbcType.VARCHAR),
-        @Result(column="FILESIZE", property="size", jdbcType=JdbcType.INTEGER),
+        @Result(column="FILETYPE", property="type", jdbcType=JdbcType.VARCHAR),
+        @Result(column="FILESIZE", property="size", jdbcType=JdbcType.BIGINT),
         @Result(column="USERFILENAME", property="userfilename", jdbcType=JdbcType.VARCHAR)
     })
     List<UploadFile> selectByFilter(UploadFileFilter filter);
@@ -52,16 +54,18 @@ public interface UploadFileMapper {
      * table tb_file
      */
     @Select({
-        "select",
-        "FILEID, FILENAME, FILEPATH, FILESIZE, USERFILENAME",
-        "from tb_file",
-        "where FILEID = #{id,jdbcType=INTEGER}"
+        "select FILEID, FILEPARAM, FILENAME, FILEPATH,",
+        "       FILETYPE, FILESIZE, USERFILENAME",
+        "  from tb_file",
+        " where FILEID = #{id,jdbcType=INTEGER}"
     })
     @Results({
         @Result(column="FILEID", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="FILEPARAM", property="param", jdbcType=JdbcType.VARCHAR),
         @Result(column="FILENAME", property="name", jdbcType=JdbcType.VARCHAR),
         @Result(column="FILEPATH", property="path", jdbcType=JdbcType.VARCHAR),
-        @Result(column="FILESIZE", property="size", jdbcType=JdbcType.INTEGER),
+        @Result(column="FILETYPE", property="type", jdbcType=JdbcType.VARCHAR),
+        @Result(column="FILESIZE", property="size", jdbcType=JdbcType.BIGINT),
         @Result(column="USERFILENAME", property="userfilename", jdbcType=JdbcType.VARCHAR)
     })
     UploadFile selectByPrimaryKey(Integer id);
@@ -70,10 +74,15 @@ public interface UploadFileMapper {
      * table tb_file
      */
     @Insert({
-        "insert into tb_file (FILEID, FILENAME, ",
-        "FILEPATH, FILESIZE, USERFILENAME)",
-        "values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, ",
-        "#{path,jdbcType=VARCHAR}, #{size,jdbcType=INTEGER}, #{userfilename,jdbcType=VARCHAR})"
+        "insert into tb_file (",
+        "  FILEID, FILEPARAM, FILENAME, FILEPATH,",
+        "  FILETYPE, FILESIZE, USERFILENAME",
+        ")",
+        "values (",
+        "  #{id,jdbcType=INTEGER}, #{param,jdbcType=VARCHAR},",
+        "  #{name,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR},",
+        "  #{type,jdbcType=VARCHAR}, #{size,jdbcType=BIGINT}, #{userfilename,jdbcType=VARCHAR}",
+        ")"
     })
     @SelectKey(statement="select coalesce(max(FILEID), 0) + 1 from tb_file", keyProperty="id", before=true, resultType=Integer.class)
     int insert(UploadFile row);
@@ -108,11 +117,13 @@ public interface UploadFileMapper {
      */
     @Update({
         "update tb_file",
-        "set FILENAME = #{name,jdbcType=VARCHAR},",
-          "FILEPATH = #{path,jdbcType=VARCHAR},",
-          "FILESIZE = #{size,jdbcType=INTEGER},",
-          "USERFILENAME = #{userfilename,jdbcType=VARCHAR}",
-        "where FILEID = #{id,jdbcType=INTEGER}"
+        "   set FILEPARAM = #{param,jdbcType=VARCHAR},",
+        "       FILENAME = #{name,jdbcType=VARCHAR},",
+        "       FILEPATH = #{path,jdbcType=VARCHAR},",
+        "       FILETYPE = #{type,jdbcType=VARCHAR},",
+        "       FILESIZE = #{size,jdbcType=BIGINT},",
+        "       USERFILENAME = #{userfilename,jdbcType=VARCHAR}",
+        " where FILEID = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(UploadFile row);
 
@@ -127,7 +138,7 @@ public interface UploadFileMapper {
      */
     @Delete({
         "delete from tb_file",
-        "where FILEID = #{id,jdbcType=INTEGER}"
+        " where FILEID = #{id,jdbcType=INTEGER}"
     })
     int deleteByPrimaryKey(Integer id);
 }
