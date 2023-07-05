@@ -11,13 +11,13 @@ import lombok.Data;
  * @author jynius
  */
 @Data
-public class Token implements Serializable {
+public class AuthenticationResponse implements Serializable {
 
 	private static final long serialVersionUID = 2274603402135926296L;
 
-	private String token;
+	private String jwt;
 	
-	public Token(String token) {
-		this.token = token;
+	public AuthenticationResponse(String jwt) {
+		this.jwt = jwt;
 	}
 }

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -12,19 +13,19 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
+
 import java.io.IOException;
 
-public class JwtFilter extends GenericFilterBean {
+@Component
+@AllArgsConstructor
+public class JwtAuthenticationFilter extends GenericFilterBean {
 
-   private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
+   private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
    
    public static final String AUTHORIZATION_HEADER = "Authorization";
    
-   private TokenProvider tokenProvider;
-   
-   public JwtFilter(TokenProvider tokenProvider) {
-      this.tokenProvider = tokenProvider;
-   }
+   private JwtTokenProvider tokenProvider;
 
    @Override
    public void doFilter(

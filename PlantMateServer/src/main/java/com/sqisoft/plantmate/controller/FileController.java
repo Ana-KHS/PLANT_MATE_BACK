@@ -25,6 +25,7 @@ import com.sqisoft.plantmate.domain.UploadFile;
 import com.sqisoft.plantmate.service.UploadFileService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 
@@ -46,6 +47,7 @@ public class FileController {
 			summary="파일 다운로드 처리",
 			description="파일 다운로드 요청을 처리한다.",
 			tags={"파일"})
+	@SecurityRequirement(name = "Bearer Authentication")
 	public ResponseEntity<InputStreamResource> download(@PathVariable("id") Integer id) {
  
         // Load file as Resource
@@ -84,6 +86,7 @@ public class FileController {
 			summary="파일 업로드 처리",
 			description="파일 업로드 요청을 처리한다.",
 			tags={"파일"})
+	@SecurityRequirement(name = "Bearer Authentication")
 	public ResponseEntity<UploadFile> upload(@RequestBody final MultipartFile mpfile) {
 
     	UploadFile dbfile = new UploadFile();

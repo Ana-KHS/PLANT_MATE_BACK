@@ -5,6 +5,9 @@ package com.sqisoft.plantmate.service;
 
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.sqisoft.plantmate.common.Paging;
@@ -19,10 +22,15 @@ import com.sqisoft.plantmate.domain.UserFilter;
  * @author jynius
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 	
 	@Resource
 	private UserMapper mapper;
+
+	@Override
+	public long selectCount(UserFilter filter) {
+		return mapper.countByFilter(filter);
+	}
 
 	@Override
 	public Paging<User> selectPage(UserFilter filter) {
@@ -33,11 +41,6 @@ public class UserServiceImpl implements UserService {
 		
 		return paging;
 	}
-
-	@Override
-	public long selectCount(UserFilter filter) {
-		return mapper.countByFilter(filter);
-	}
 	
 	@Override
 	public List<User> selectList(UserFilter filter) {
@@ -47,6 +50,17 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User selectOne(String id) {
 		return mapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		
+		User user = selectOne(username);
+		if(user==null) {
+			throw new UsernameNotFoundException("Can't find the username[" + username + "]!");
+		}
+		
+		return user;
 	}
 	
 //	@Override

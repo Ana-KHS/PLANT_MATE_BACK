@@ -25,7 +25,14 @@ public class PlantSearchFilter implements Serializable {
 	private static final String URL = "http://openapi.nature.go.kr/openapi/service/rest/PlantService/";
 	private static final String FORMAT0 = "%s?serviceKey=%s&sw=%s&st=%d&numOfRows=%d&pageNo=%d&dateGbn=%s";
 	private static final String FORMAT1 = "%s?serviceKey=%s&sw=%s&st=%d&numOfRows=%d&pageNo=%d";
-	private static final String SERVICE_KEY = "JcBGPKILhz5M5zqRGGh4o4pbKmZ1%2Bq%2FPyyE21E%2Fw7km4dojuLK7xitLolznb%2B7iwx7txbtiykyFAXaQezgYDbA%3D%3D";
+	private static final String SERVICE_KEY = "eB0CgsA%2F4xRPNWM957Q2fvme6hxiDNwezUHefI0Oc%2B8KUEXkEC0Q1ynJ9S7kie%2FA1UrpPDjjnj7WBWY8kYKXpw%3D%3D";
+
+    @JsonIgnore
+    public static URI getUri(String type, String id) {
+    	String query = String.format("%s?serviceKey=%s&q1=%s", type, SERVICE_KEY, id);
+    	UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL + query);
+    	return builder.build(true).toUri();
+    }
 
 	private static enum Type {
 		PLANT_WORD_SEARCH ("51600", "plantWordSearch",    "식물용어사전 목록 조회"),                                                

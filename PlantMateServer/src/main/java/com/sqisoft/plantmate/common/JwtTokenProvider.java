@@ -3,6 +3,7 @@ package com.sqisoft.plantmate.common;
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -27,16 +28,16 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 @Component
-public class TokenProvider implements InitializingBean {
+public class JwtTokenProvider implements InitializingBean {
 
-   private static final Logger LOG = LoggerFactory.getLogger(TokenProvider.class);
+   private static final Logger LOG = LoggerFactory.getLogger(JwtTokenProvider.class);
    private static final String AUTHORITIES_KEY = "auth";
    
    private final String secret;
    private final long tokenValidityInMilliseconds;
    private Key key;
 
-   public TokenProvider(
+   public JwtTokenProvider(
       @Value("${jwt.secret}") String secret,
       @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
       this.secret = secret;
@@ -75,8 +76,9 @@ public class TokenProvider implements InitializingBean {
               .parseClaimsJws(token)
               .getBody();
 
+      String sauth = claims.get(AUTHORITIES_KEY).toString();
       Collection<? extends GrantedAuthority> authorities =
-         Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+		  sauth.isBlank()? Collections.emptySet(): Arrays.stream(sauth.split(","))
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toList());
 
