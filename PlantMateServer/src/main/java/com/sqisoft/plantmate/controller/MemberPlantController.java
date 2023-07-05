@@ -20,6 +20,7 @@ import com.sqisoft.plantmate.domain.MemberPlantFilter;
 import com.sqisoft.plantmate.service.MemberPlantService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 
@@ -39,6 +40,7 @@ public class MemberPlantController {
 			summary="식물 목록",
 			description="식물 목록을 반환한다.",
 			tags={"식물"})
+	@SecurityRequirement(name = "Bearer Authentication")
 	public ResponseEntity<Paging<MemberPlant>> list(MemberPlantFilter filter) {
 		
 		Paging<MemberPlant> page = service.selectPage(filter);
@@ -51,6 +53,7 @@ public class MemberPlantController {
 			summary="식물 등록",
 			description="식물 정보를 등록한다.",
 			tags={"식물"})
+	@SecurityRequirement(name = "Bearer Authentication")
 	public ResponseEntity<MemberPlant> save(@RequestBody MemberPlant plant) {
 		
 		service.save(plant);
@@ -63,6 +66,7 @@ public class MemberPlantController {
 			summary="특정 식물 정보 반환",
 			description="특정(id) 식물 정보를 반환한다.",
 			tags={"식물"})
+	@SecurityRequirement(name = "Bearer Authentication")
 	public ResponseEntity<MemberPlant> one(@PathVariable Integer id) {
 		
 		MemberPlant plant = service.selectOne(id);
@@ -75,6 +79,7 @@ public class MemberPlantController {
 			summary="특정 식물 정보 수정",
 			description="특정(id) 식물 정보를 수정한다.",
 			tags={"식물"})
+	@SecurityRequirement(name = "Bearer Authentication")
 	public ResponseEntity<MemberPlant> save(@PathVariable Integer id, MemberPlant plant) {
 		
 		plant.setId(id);
@@ -88,6 +93,7 @@ public class MemberPlantController {
 			summary="특정 식물 정보 삭제",
 			description="특정(id) 식물 정보를 삭제한다.",
 			tags={"식물"})
+	@SecurityRequirement(name = "Bearer Authentication")
 	public ResponseEntity<MemberPlant> delete(@PathVariable Integer id) {
 		
 		MemberPlant plant = service.selectOne(id);

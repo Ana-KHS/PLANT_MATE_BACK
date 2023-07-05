@@ -87,7 +87,7 @@ public class CommunityFilter extends BaseFilter<CommunityFilter.Criteria> {
 			criteria.addCategoryIdEqualTo(category.getId());
 		}
 		
-		if(searchWord!=null) {
+		if(searchWord!=null && !searchWord.isBlank()) {
 			Criteria criteria0 = new Criteria();
 			criteria0.setConjunction("or");
 			criteria0.addContentLike(searchWord);
@@ -206,12 +206,12 @@ public class CommunityFilter extends BaseFilter<CommunityFilter.Criteria> {
         }
 
         public Criteria addTitleLike(String value) {
-            addCriterion("TITLE like", value);
+            addCriterion("upper(TITLE) like", "%" + value.toUpperCase() + "%");
             return (Criteria) this;
         }
 
         public Criteria addTitleNotLike(String value) {
-            addCriterion("TITLE not like", value);
+            addCriterion("upper(TITLE) not like", "%" + value.toUpperCase() + "%");
             return (Criteria) this;
         }
 
@@ -276,12 +276,12 @@ public class CommunityFilter extends BaseFilter<CommunityFilter.Criteria> {
         }
 
         public Criteria addContentLike(String value) {
-            addCriterion("CONTENT like", value);
+            addCriterion("upper(CONTENT) like", "%" + value.toUpperCase() + "%");
             return (Criteria) this;
         }
 
         public Criteria addContentNotLike(String value) {
-            addCriterion("CONTENT not like", value);
+            addCriterion("upper(CONTENT) not like", "%" + value.toUpperCase() + "%");
             return (Criteria) this;
         }
 

@@ -45,7 +45,7 @@ CREATE TABLE `tb_comment` (
 
 DROP TABLE IF EXISTS `tb_community`;
 CREATE TABLE `tb_community` (
-    `COMMUNITYID`    INT         NOT NULL,
+    `COMMUNITYID`    INT         AUTO_INCREMENT,
     `TITLE`          VARCHAR(50) NOT NULL,
     `CONTENT`        VARCHAR(50) NOT NULL,
     `CREATE_DATE`    TIMESTAMP   NOT NULL,
@@ -54,6 +54,26 @@ CREATE TABLE `tb_community` (
     `FILEID`         INT         NULL,
     `PLANTID`        INT         NULL
 );
+--ALTER TABLE `tb_comment`
+--  DROP CONSTRAINT `FK_tb_community_TO_tb_comment_1`;
+--ALTER TABLE `tb_bookmark`
+--  DROP CONSTRAINT `FK_tb_community_TO_tb_bookmark_1`;
+--ALTER TABLE `tb_community`
+--MODIFY COLUMN `COMMUNITYID` INT  AUTO_INCREMENT;
+--ALTER TABLE `tb_bookmark`
+--  ADD CONSTRAINT `FK_tb_community_TO_tb_bookmark_1` FOREIGN KEY (
+--    `COMMUNITYID`
+--  )
+--  REFERENCES `tb_community` (
+--    `COMMUNITYID`
+--  );
+--ALTER TABLE `tb_comment`
+--  ADD CONSTRAINT `FK_tb_community_TO_tb_comment_1` FOREIGN KEY (
+--    `COMMUNITYID`
+--  )
+--  REFERENCES `tb_community` (
+--    `COMMUNITYID`
+--  );
 
 DROP TABLE IF EXISTS `tb_member_plant`;
 CREATE TABLE `tb_member_plant` (

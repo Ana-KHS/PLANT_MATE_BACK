@@ -24,7 +24,9 @@ public class Community implements Serializable {
 		
 		ASK("A", "질문해요"),
 		BRAG("B", "자랑해요"),
-		LIVING("L", "생활정보");
+		CONCERN("C", "봐주세요"),
+		LIVING("L", "생활정보"),
+		SHARING("S", "정보공유");
 		
 		private String id;
 		private String title;

@@ -32,6 +32,6 @@ public abstract class BaseFilter<T extends CriteriaBased> implements Serializabl
         
 		rootCriteria = buildCriteria();
 
-    	return rootCriteria.toString();
+    	return rootCriteria==null? null: rootCriteria.toString();
 	}
 }

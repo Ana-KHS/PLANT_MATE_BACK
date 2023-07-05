@@ -77,19 +77,19 @@ public interface CommunityMapper {
      */
     @Insert({
         "insert into tb_community (",
-        "  COMMUNITYID, PLANTID,",
+        "  PLANTID,",
         "  CATEGORYID, FILEID,",
         "  TITLE, CONTENT,",
         "  CREATE_DATE, MODIFY_DATE",
         ")",
         "values (",
-        "  #{id,jdbcType=INTEGER}, #{plantId,jdbcType=INTEGER},",
+        "  #{plantId,jdbcType=INTEGER},",
         "  #{categoryId,jdbcType=CHAR}, #{fileId,jdbcType=INTEGER},",
         "  #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},",
         "  current_timestamp, current_timestamp",
         ")"
     })
-    @SelectKey(statement="select coalesce(max(COMMUNITYID), 0) + 1 from tb_community", keyProperty="id", before=true, resultType=Integer.class)
+    @SelectKey(statement="select last_insert_id()", keyProperty="id", before=false, resultType=Integer.class)
     int insert(Community row);
 
     /**
