@@ -1,6 +1,8 @@
 package com.sqisoft.plantmate.common;
 
 import java.security.Key;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -17,6 +19,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -30,106 +33,130 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtTokenProvider implements InitializingBean {
 
-   private static final Logger LOG = LoggerFactory.getLogger(JwtTokenProvider.class);
-   private static final String AUTHORITIES_KEY = "auth";
-   
-   private final String secret;
-   private final long tokenValidityInMilliseconds;
-   private Key key;
+	private static final Logger LOG = LoggerFactory.getLogger(JwtTokenProvider.class);
+	private static final ZoneId ZONE_ID = ZoneId.systemDefault();
+	private static final String AUTHORITIES_KEY = "auth";
+	private static final String REMOTE_ADDR_KEY = "addr";
+	private static final String BEARER_PREFIX = "Bearer ";
 
-   public JwtTokenProvider(
-      @Value("${jwt.secret}") String secret,
-      @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
-      this.secret = secret;
-      this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
-   }
+	/**
+	 * "Bearer " 접두사 제거
+	 * 
+	 * @param bearerToken
+	 * @return "Bearer " 접두사 제거된 토큰
+	 */
+	public static String resolveToken(String bearerToken) {
 
-   @Override
-   public void afterPropertiesSet() {
-      byte[] keyBytes = Decoders.BASE64.decode(secret);
-      this.key = Keys.hmacShaKeyFor(keyBytes);
-   }
+		if (!StringUtils.hasText(bearerToken) || !bearerToken.startsWith(BEARER_PREFIX)) {
+			return null;
+		}
 
-   public String createToken(Authentication authentication) {
+		return bearerToken.substring(BEARER_PREFIX.length());
+	}
 
-      String authorities = authentication.getAuthorities().stream()
-         .map(GrantedAuthority::getAuthority)
-         .collect(Collectors.joining(","));
+	/**
+	 * "Bearer " 접두사 추가
+	 * 
+	 * @param token
+	 * @return "Bearer " 접두사 추가된 토큰
+	 */
+	public static String bindToken(String token) {
+		return BEARER_PREFIX.concat(token);
+	}
 
-      long now = (new Date()).getTime();
-      Date validity = new Date(now + this.tokenValidityInMilliseconds);
+	private final String secret;
+	private final long accessTtl; // TTL in seconds
+	private Key key;
 
-      return Jwts.builder()
-         .setSubject(authentication.getName())
-         .claim(AUTHORITIES_KEY, authorities)
-         .signWith(key, SignatureAlgorithm.HS512)
-         .setExpiration(validity)
-         .compact();
-   }
+	public JwtTokenProvider(
+			@Value("${jwt.secret}") String secret,
+			@Value("${jwt.token-ttl}") long tokenTtl) {
+		this.secret = secret;
+		this.accessTtl = tokenTtl;
+	}
 
-   public Authentication getAuthentication(String token) {
-	   
-      Claims claims = Jwts
-              .parserBuilder()
-              .setSigningKey(key)
-              .build()
-              .parseClaimsJws(token)
-              .getBody();
+	@Override
+	public void afterPropertiesSet() {
+		byte[] keyBytes = Decoders.BASE64.decode(secret);
+		this.key = Keys.hmacShaKeyFor(keyBytes);
+	}
 
-      String sauth = claims.get(AUTHORITIES_KEY).toString();
-      Collection<? extends GrantedAuthority> authorities =
-		  sauth.isBlank()? Collections.emptySet(): Arrays.stream(sauth.split(","))
-            .map(SimpleGrantedAuthority::new)
-            .collect(Collectors.toList());
+	public String createToken(Authentication authentication, String remoteAddress) {
 
-      User principal = new User(claims.getSubject(), "", authorities);
+		String authorities = authentication.getAuthorities().stream()
+				.map(GrantedAuthority::getAuthority)
+				.collect(Collectors.joining(","));
 
-      return new UsernamePasswordAuthenticationToken(principal, token, authorities);
-   }
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime expired = now.plusSeconds(accessTtl);
 
-   public boolean validateToken(String token) {
-	   
-      try {
-         Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-         return true;
-      }
-      catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-         LOG.info("잘못된 JWT 서명입니다.");
-      }
-      catch (ExpiredJwtException e) {
-         LOG.info("만료된 JWT 토큰입니다.");
-      }
-      catch (UnsupportedJwtException e) {
-         LOG.info("지원되지 않는 JWT 토큰입니다.");
-      }
-      catch (IllegalArgumentException e) {
-         LOG.info("JWT 토큰이 잘못되었습니다.");
-      }
+		return Jwts.builder()
+				.setSubject(authentication.getName())
+				.claim(AUTHORITIES_KEY, authorities)
+				.claim(REMOTE_ADDR_KEY, remoteAddress)
+				.setIssuedAt(Date.from(now.atZone(ZONE_ID).toInstant()))
+				.setExpiration(Date.from(expired.atZone(ZONE_ID).toInstant()))
+				.signWith(key, SignatureAlgorithm.HS512)
+				.compact();
+	}
 
-      return false;
-   }
+	public Authentication getAuthentication(String token) {
 
-//   // JWT 토큰을 쿠키에 추가
-//   public void addTokenToCookie(HttpServletResponse response, String token) {
-//      Cookie cookie = new Cookie("token", token);
-//      cookie.setMaxAge(Math.toIntExact(tokenValidityInMilliseconds)); // 초 단위로 설정
-//      cookie.setPath("/");
-//      response.addCookie(cookie);
-//   }
-//
-//   // 쿠키에서 JWT 토큰 제거
-//   public void removeTokenFromCookie(HttpServletRequest request, HttpServletResponse response) {
-//      Cookie[] cookies = request.getCookies();
-//      if (cookies != null) {
-//         for (Cookie cookie : cookies) {
-//            if ("token".equals(cookie.getName())) {
-//               cookie.setValue("");
-//               cookie.setPath("/");
-//               cookie.setMaxAge(0);
-//               response.addCookie(cookie);
-//               break;
-//            }
-//         }
-//      }
-//   }
+		Claims claims = Jwts.parserBuilder()
+				.setSigningKey(key)
+				.build()
+				.parseClaimsJws(token)
+				.getBody();
+
+		String sauth = claims.get(AUTHORITIES_KEY).toString();
+		
+		Collection<? extends GrantedAuthority> authorities = 
+				sauth.isBlank()? Collections.emptySet()
+				: Arrays.stream(sauth.split(","))
+				.map(SimpleGrantedAuthority::new)
+				.collect(Collectors.toList());
+
+		User principal = new User(claims.getSubject(), "", authorities);
+
+		return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+	}
+
+	public boolean validateToken(String token) {
+
+		if (!StringUtils.hasText(token)) {
+			return false;
+		}
+
+		try {
+			Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+			return true;
+		}
+		catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+			LOG.info("잘못된 JWT 서명입니다.");
+		}
+		catch (ExpiredJwtException e) {
+			LOG.info("만료된 JWT 토큰입니다.");
+		}
+		catch (UnsupportedJwtException e) {
+			LOG.info("지원되지 않는 JWT 토큰입니다.");
+		}
+		catch (IllegalArgumentException e) {
+			LOG.info("JWT 토큰이 잘못되었습니다.");
+		}
+
+		return false;
+	}
+
+	public boolean validateAddress(String token, String remoteAddress) {
+
+		Claims claims = Jwts.parserBuilder()
+				.setSigningKey(key)
+				.build()
+				.parseClaimsJws(token)
+				.getBody();
+
+		String sauth = claims.get(REMOTE_ADDR_KEY).toString();
+		
+		return sauth!=null && sauth.equals(remoteAddress);
+	}
 }

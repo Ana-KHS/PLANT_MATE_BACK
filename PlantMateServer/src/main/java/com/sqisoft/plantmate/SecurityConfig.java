@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -18,14 +19,17 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import com.sqisoft.plantmate.common.JwtAuthenticationFilter;
+import com.sqisoft.plantmate.common.JwtTokenProvider;
+import com.sqisoft.plantmate.controller.JwtAuthenticationFilter;
 
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import jakarta.servlet.Filter;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @SecurityScheme(
   name = "Bearer Authentication",
   type = SecuritySchemeType.HTTP,
@@ -34,14 +38,19 @@ import jakarta.servlet.http.HttpServletResponse;
 )
 public class SecurityConfig {
 
-	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 	private final UserDetailsService userDetailsService;
+	
+	private JwtTokenProvider tokenProvider;
 
 	public SecurityConfig(
-			JwtAuthenticationFilter jwtAuthenticationFilter,
+			JwtTokenProvider tokenProvider,
 			UserDetailsService userDetailsService) {
-		this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+		this.tokenProvider = tokenProvider;
 		this.userDetailsService      = userDetailsService;
+	}
+
+	private Filter jwtAuthenticationFilter() {
+		return new JwtAuthenticationFilter(tokenProvider);
 	}
 
 	@Bean
@@ -79,9 +88,51 @@ public class SecurityConfig {
         
         return new CorsFilter(source);
     }
-
+    
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        //@formatter:off
+        return httpSecurity
+        	.headers(hc->{hc.frameOptions(o->o.disable());})
+            //jwt 인증 방식이기 때문에 csrf를 disable합니다.
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/token/**").permitAll()
+//  		      .requestMatchers("/rest/actuator").permitAll()
+//  		      .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+//  	          .requestMatchers("/api/auth/**", "/api/user", "/api/user/**").permitAll()
+//  	          .requestMatchers("/api/search/**", "/api/community/**").permitAll()
+  		      .anyRequest().permitAll()
+//                .anyRequest().authenticated()
+            )
+//	        .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+            .authenticationProvider(authenticationProvider())
+            //filter 우선적으로 corsfilter적용 후 usernamePasswordAuthenticationFilter적용
+            .addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+            /*
+             * "무상태(stateless)"는 세션 관리 방식 중 하나로,
+             * 서버가 클라이언트의 세션 상태를 저장하지 않는 것을 의미
+             * 각각의 클라이언트 요청은 독립적으로 처리되며,
+             * 이전 요청에 대한 상태나 정보를 서버가 유지하지 않움
+             */
+            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+			.exceptionHandling(eh -> {eh
+				// 유효한 자격증명을 제공하지 않고 접근하려 할때 401
+				.authenticationEntryPoint((request, response, authenticationException) -> {
+					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authenticationException.getLocalizedMessage());
+				})
+				// 필요한 권한이 없이 접근하려 할때 403
+				.accessDeniedHandler((request, response, accessDeniedException) -> {
+					response.sendError(HttpServletResponse.SC_FORBIDDEN, accessDeniedException.getLocalizedMessage());
+				});
+			})
+            .build();
+        //@formatter:on
+    }
+    
+    @SuppressWarnings("unused")
+	private SecurityFilterChain filterChainDeprecated(HttpSecurity httpSecurity) throws Exception {
     	
     	httpSecurity.headers().frameOptions().disable();
         //jwt 인증 방식이기 때문에 csrf를 disable합니다.
@@ -89,12 +140,6 @@ public class SecurityConfig {
         //@formatter:off
         httpSecurity
 		      .authorizeHttpRequests()
-		      .requestMatchers("/rest/actuator").permitAll()
-		      .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-	          .requestMatchers("/api/auth/**", "/api/user", "/api/user/**").permitAll()
-	          .requestMatchers("/api/search/**", "/api/community/**").permitAll()
-//		      .anyRequest().permitAll()
-              .anyRequest().authenticated()
             .and()
               .sessionManagement()
               /*
@@ -127,7 +172,7 @@ public class SecurityConfig {
               .authenticationProvider(authenticationProvider())
               //filter 우선적으로 corsfilter적용 후 usernamePasswordAuthenticationFilter적용
               .addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class)
-              .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+              .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         //@formatter:on
 
         return httpSecurity.build();
