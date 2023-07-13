@@ -61,7 +61,7 @@ public class JwtTokenProvider implements InitializingBean {
 	 * @return "Bearer " 접두사 추가된 토큰
 	 */
 	public static String bindToken(String token) {
-		return BEARER_PREFIX.concat(token);
+		return String.format("%s%s", BEARER_PREFIX, token);
 	}
 
 	private final String secret;
@@ -87,7 +87,7 @@ public class JwtTokenProvider implements InitializingBean {
 				.map(GrantedAuthority::getAuthority)
 				.collect(Collectors.joining(","));
 
-		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime now = LocalDateTime.now(ZONE_ID);
 		LocalDateTime expired = now.plusSeconds(accessTtl);
 
 		return Jwts.builder()
