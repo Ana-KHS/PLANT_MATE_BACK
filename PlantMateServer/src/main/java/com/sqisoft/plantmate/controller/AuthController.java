@@ -63,4 +63,16 @@ public class AuthController {
 
 		return ResponseEntity.ok(new AuthenticationResponse(access));
 	}
+
+	/**
+	 * <h3>로그아웃</h3>
+	 * 
+	 * @param logout
+	 * @return
+	 */
+	@PostMapping("/logout")
+	@Operation(summary = "로그아웃 처리", description = "로그아웃 한다.", tags = { "인증/허가" })
+	public ResponseEntity<String> logout(Authentication authentication) {
+		return ResponseEntity.ok("logouted!");
+	}
 }
