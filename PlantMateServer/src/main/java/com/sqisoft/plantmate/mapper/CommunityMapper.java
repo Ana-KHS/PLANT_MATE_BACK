@@ -47,6 +47,7 @@ public interface CommunityMapper {
         @Result(column="MODIFY_DATE", property="modifyDate", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="CATEGORYID", property="categoryId", jdbcType=JdbcType.CHAR),
         @Result(column="FILEID", property="fileId", jdbcType=JdbcType.INTEGER),
+        @Result(column="COMMENT_CNT", property="commentCnt", jdbcType=JdbcType.INTEGER),
         @Result(column="PLANTID", property="plantId", jdbcType=JdbcType.INTEGER)
     })
     List<Community> selectByFilter(CommunityFilter filter);
@@ -56,7 +57,8 @@ public interface CommunityMapper {
      */
     @Select({
         "select",
-        "COMMUNITYID, TITLE, CONTENT, CREATE_DATE, MODIFY_DATE, CATEGORYID, FILEID, PLANTID",
+        "COMMUNITYID, TITLE, CONTENT, CREATE_DATE, MODIFY_DATE, CATEGORYID, FILEID, PLANTID,",    
+        "(SELECT COUNT(*) FROM tb_comment WHERE COMMUNITYID = #{id,jdbcType=INTEGER}) AS COMMENT_CNT",
         "from tb_community",
         "where COMMUNITYID = #{id,jdbcType=INTEGER}"
     })
@@ -67,8 +69,9 @@ public interface CommunityMapper {
         @Result(column="CREATE_DATE", property="createDate", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="MODIFY_DATE", property="modifyDate", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="CATEGORYID", property="categoryId", jdbcType=JdbcType.CHAR),
+        @Result(column="COMMENT_CNT", property="commentCnt", jdbcType=JdbcType.INTEGER),
         @Result(column="FILEID", property="fileId", jdbcType=JdbcType.INTEGER),
-        @Result(column="PLANTID", property="plantId", jdbcType=JdbcType.INTEGER)
+        @Result(column="PLANTID", property="plantId", jdbcType=JdbcType.INTEGER)       
     })
     Community selectByPrimaryKey(Integer id);
 
@@ -141,7 +144,7 @@ public interface CommunityMapper {
 
     /**
      * table tb_community
-     */
+ r     */
     @Delete({
         "delete from tb_community",
         "where COMMUNITYID = #{id,jdbcType=INTEGER}"

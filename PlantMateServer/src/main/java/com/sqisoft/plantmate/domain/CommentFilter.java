@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.sqisoft.plantmate.domain.filter.CriteriaBased;
+import com.sqisoft.plantmate.domain.CommunityFilter.Criteria;
 import com.sqisoft.plantmate.domain.filter.BaseFilter;
 
 import lombok.Data;
@@ -21,11 +22,20 @@ public class CommentFilter extends BaseFilter<CommentFilter.Criteria> {
 
 	private static final long serialVersionUID = 6709097668302614071L;
 
+	private Integer communityId;
+	
 	@Override
 	public Criteria buildCriteria() {
-		return null;
+		
+		Criteria criteria = new Criteria();
+		criteria.setConjunction("and");
+		if(communityId != null){
+			criteria.addCommunityIdEqualTo(communityId);
+		}
+		return criteria;
 	}
 
+	
     /**
      * table tb_comment
      */

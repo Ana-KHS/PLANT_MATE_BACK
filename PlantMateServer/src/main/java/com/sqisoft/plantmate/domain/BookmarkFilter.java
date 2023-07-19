@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.sqisoft.plantmate.domain.filter.CriteriaBased;
+import com.sqisoft.plantmate.domain.CommentFilter.Criteria;
 import com.sqisoft.plantmate.domain.filter.BaseFilter;
 
 import lombok.Data;
@@ -21,9 +22,19 @@ public class BookmarkFilter extends BaseFilter<BookmarkFilter.Criteria> {
 
 	private static final long serialVersionUID = -8911627324327288432L;
 
+	private Integer communityId;
+	private String userId;
+	
 	@Override
 	public Criteria buildCriteria() {
-		return null;
+		Criteria criteria = new Criteria();
+		criteria.setConjunction("and");
+		if(communityId != null && userId != null){
+			criteria.addCommunityidEqualTo(communityId);
+			criteria.setConjunction("and");
+			criteria.addUserIdEqualTo(userId);
+		}
+		return criteria;
 	}
 
     /**

@@ -95,6 +95,9 @@ public class Community implements Serializable {
      */
     private Integer plantId;
     
+    
+    private Integer commentCnt;
+    
     /**
      * @return
      */

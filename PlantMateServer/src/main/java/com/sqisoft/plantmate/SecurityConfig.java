@@ -45,8 +45,8 @@ public class SecurityConfig {
 			"/rest/actuator",
 			"/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html",
 			"/api/auth/**", "/api/user", "/api/user/**",
-			"/api/search/**",
-//			"/api/community/**"			
+			"/api/search/**","/api/comment/**","/api/bookmark/**",
+			"/api/community/**"			
 	};
 	
 	private final UserDetailsService userDetailsService;

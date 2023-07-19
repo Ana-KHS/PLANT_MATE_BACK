@@ -80,7 +80,7 @@ public interface CommentMapper {
         "FILEID)",
         "values (#{id,jdbcType=INTEGER}, #{communityId,jdbcType=INTEGER}, ",
         "#{userId,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, ",
-        "#{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, ",
+        "  current_timestamp, current_timestamp,",
         "#{fileId,jdbcType=INTEGER})"
     })
     @SelectKey(statement="select coalesce(max(COMMENTID), 0) + 1 from tb_comment", keyProperty="id", before=true, resultType=Integer.class)

@@ -74,8 +74,8 @@ public interface BookmarkMapper {
         "COMMUNITYID, CREATE_DATE, ",
         "MODIFY_DATE)",
         "values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, ",
-        "#{communityId,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, ",
-        "#{modifyDate,jdbcType=TIMESTAMP})"
+        "#{communityId,jdbcType=INTEGER}, current_timestamp, ",
+        "current_timestamp)"
     })
     @SelectKey(statement="select coalesce(max(BOOKMARKID), 0) + 1 from tb_bookmark", keyProperty="id", before=true, resultType=Integer.class)
     int insert(Bookmark row);
